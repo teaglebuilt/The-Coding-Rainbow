@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Course
+from django.views.generic import ListView, DetailView, View
+from .models import Course, Lesson
+from memberships.models import UserMembership
 # Create your views here.
 
 class CourseListView(ListView):
@@ -9,3 +10,31 @@ class CourseListView(ListView):
 
 class CourseDetailView(DetailView):
     model = Course
+
+
+class LessonDetailView(View):
+ # filter all the courses, and then filter that course's lessons for a specific lesson..yeah wtf
+    def get(self, request, course_slug, lesson_slug, *args, **kwargs):
+
+        course_queryset = Course.objects.filter(slug=course_slug)
+        if course_queryset.exists():
+            course = course_queryset.first()
+
+        lesson_queryset = course.lessons.filter(slug=lesson_slug)
+        if lesson_queryset.exists():
+            lesson = lesson_queryset.first()
+
+        user_membership = UserMembership.objects.filter(user=request.user).first()
+        user_membership_type = user_membership.membership.membership_type #membership types
+
+        course_allowed_mem_types = course.allowed_membership.all() # MAny to Many -allowed memberships
+
+        context = {
+            'object': None
+        }
+
+        # check to see lesson available for the user's membership type
+        if course_allowed_mem_types.filter(membership_type=user_membership_type).exists():
+            context = {'object': lesson }
+
+        return render(request, 'courses/lesson_detail.html', context)
