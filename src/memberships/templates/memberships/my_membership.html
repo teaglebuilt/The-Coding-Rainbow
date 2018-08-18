@@ -1,0 +1,36 @@
+{% extends 'memberships/base.html' %}
+
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 col-md-6">
+			<h1 class="text-center">My Profile</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 col-md-4">
+			{}
+			<img src="{{ user.author.image}}" alt="profile-pic">
+		</div>
+	</div>
+
+    <div class="row">
+			<div class="well well-lg col-sm-4 col-md-4">
+					{% if user_subscription != None %}
+						<h4>Current Membership: {{ user_membership.membership.membership_type }} <small>since {{ user_subscription.get_created_date }}</small></h4>
+
+						{% if user_subscription.active != False %}
+							<p>Next payment due: {{ user_subscription.get_next_billing_date }}</p>
+							<a class="btn btn-primary" href="{% url 'memberships:cancel' %}">Cancel subscription</a>
+
+						{% else %}
+							<p>You don't have an active membership plan. Check them out here
+								<a href="{% url 'memberships:select' %}"></a>
+							</p>
+						{% endif %}
+					{% endif %}
+				</div>
+	</div>
+</div>
+{% endblock content %}

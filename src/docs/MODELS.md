@@ -31,4 +31,15 @@ Lesson
 -video
 -thumbnail
 
+Post
+-slug
+-title
+-description
+-author  (Foreign Key on Author)
+-image
 
+Author
+-User   (ForeignKey to default User)
+-Membership  (ForeignKet to UserMembership)
+-Name
+-Profile Image

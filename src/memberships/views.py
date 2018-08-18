@@ -9,14 +9,17 @@ from .models import Membership, UserMembership, Subscription
 
 import stripe
 
-def profile_view(request):
+
+
+
+def my_membership_view(request):
 	user_membership = get_user_membership(request)
 	user_subscription = get_user_subscription(request)
 	context = {
 		'user_membership': user_membership,
 		'user_subscription': user_subscription
 	}
-	return render(request, "memberships/profile.html", context)
+	return render(request, "memberships/my_membership.html", context)
 
 def get_user_membership(request):
     user_membership_qs = UserMembership.objects.filter(user=request.user)
@@ -100,7 +103,7 @@ def PaymentView(request):
                         "plan": selected_membership.stripe_plan_id,
                     },
                 ],
-				trial_end_period= 100
+				trial_period_days= 100
             )
 
             return redirect(reverse('memberships:update-transactions',

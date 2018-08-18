@@ -4,15 +4,22 @@
 {% block content %}
 <div class="container">
     <div class="row">
+            <h1 class="text-center">Course Detail View Page</h1>
+            <hr>
         <div class="col-sm-4 col-md-4">
-            <h1>Course Detail View Page</h1>
-            <h3>{{ object.title }}</h3>
-            <p>{{ object.description }}</p>
-            <ol>
+            <h1>{{ object.title }}</h1>
+            <p class="lead">{{ object.description }}</p>
+            </div>
+            <div class="col-sm-6 col-md-6">
+            <table class="table table-bordered">
                 {% for lesson in object.lessons %}
-                <li><a href="{{ lesson.get_absolute_url }}">{{ lesson.title }}</a></li>
+                <td class="active">
+                  <a href="{{ lesson.get_absolute_url }}">
+                    <h4 class="text-center">{{ lesson.title }}</h4>
+                  </a>
+                </td>
                 {% endfor %}
-            </ol>
+            </table>
 
         </div>
     </div>

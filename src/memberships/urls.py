@@ -4,7 +4,7 @@ from .views import (
 	MembershipSelectView,
 	PaymentView,
 	updateTransactionRecords,
-	profile_view,
+	my_membership_view,
 	cancelSubscription
 	)
 
@@ -14,6 +14,6 @@ urlpatterns = [
     path('', MembershipSelectView.as_view(), name='select'),
     path('payment/', PaymentView, name='payment'),
     path('update-transactions/<subscription_id>/', updateTransactionRecords, name='update-transactions'),
-	path('profile/', profile_view, name='profile'),
+	path('my_membership/', my_membership_view, name='my_membership'),
 	path('cancel/', cancelSubscription, name='cancel')
 ]

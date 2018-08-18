@@ -14,9 +14,8 @@ SECRET_KEY = 'm(41aqub*@5i27ay7#*zfa++50rux5hz%h-^#@k0i#$())n%qy'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,7 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'memberships',
     'courses',
+    'blog',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +57,13 @@ TEMPLATES = [
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = (
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# )
 
 WSGI_APPLICATION = 'videoservice.wsgi.application'
 
@@ -109,13 +117,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_root'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static_root'),
+# ]
 
 VENV_PATH = os.path.dirname(BASE_DIR)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 

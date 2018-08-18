@@ -27,14 +27,17 @@ class LessonDetailView(View):
         user_membership = UserMembership.objects.filter(user=request.user).first()
         user_membership_type = user_membership.membership.membership_type #membership types
 
-        course_allowed_mem_types = course.allowed_membership.all() # MAny to Many -allowed memberships
+        course_allowed_mem_types = course.allowed_membership.all()
+         # MAny to Many -allowed memberships
 
         context = {
             'object': None
         }
 
         # check to see lesson available for the user's membership type
+        # how can i can i pass the membership choice with free included?
         if course_allowed_mem_types.filter(membership_type=user_membership_type).exists():
             context = {'object': lesson }
+
 
         return render(request, 'courses/lesson_detail.html', context)

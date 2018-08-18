@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-
-
 from datetime import datetime
 import stripe
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -28,7 +28,7 @@ class Membership(models.Model):
 
 
 class UserMembership(models.Model):
-	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
 
