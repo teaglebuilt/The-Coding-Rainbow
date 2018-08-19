@@ -12,14 +12,16 @@
             </div>
             <div class="col-sm-6 col-md-6">
             <table class="table table-bordered">
+             <tbody>
                 {% for lesson in object.lessons %}
-                <td class="active">
+                <tr class="active">
                   <a href="{{ lesson.get_absolute_url }}">
-                    <h4 class="text-center">{{ lesson.title }}</h4>
+                     <h4 class="text-center">{{ lesson.title }}</h4>
                   </a>
-                </td>
+                </tr>
                 {% endfor %}
-            </table>
+             </tbody>
+        </table>
 
         </div>
     </div>

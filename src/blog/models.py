@@ -23,6 +23,10 @@ class Post(models.Model):
     def get_delete_url(self):
         return '/posts/{}/delete/'.format(self.slug)
 
+    class Meta:
+            db_table = 'Post'
+
+
 
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,3 +35,6 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        db_table = 'Author'

@@ -16,8 +16,8 @@
     <div class="container">
      <nav class="breadcrumb">
             <ol class='breadcrumb'>
-                <li class='pull-left'><a href='/register'>Register</a></li>
-                <li class='pull-right'><a href='/login'>Login</a></li>
+                <li class='pull-left'><a href="{% url 'memberships:register' %}">Register</a></li>
+                <li class='pull-right'><a href="{% url 'memberships:login' %}">Login</a></li>
                 <li class='pull-right'><a href='/memberships'>Memberships</a></li>
             </ol>
      </nav>
@@ -31,7 +31,7 @@
                 <li><a href='/memberships/my_membership/'>View Membership Details</a></li>
                     {% block post_detail_link %}
                     {% endblock %}
-                <li class='pull-right'><a href='/logout'>Logout</a></li>
+                <li class='pull-right'><a href="{% url 'memberships:logout' %}">Logout</a></li>
                 <li class='pull-right'><a href='/memberships'>Memberships</a></li>
             </ol>
         </div>

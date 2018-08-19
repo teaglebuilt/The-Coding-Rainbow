@@ -4,4 +4,5 @@ from .models import Membership, UserMembership, Subscription
 admin.site.register(Membership)
 admin.site.register(UserMembership)
 admin.site.register(Subscription)
+
 # Register your models here.

@@ -10,8 +10,19 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-4 col-md-4">
-			{}
-			<img src="{{ user.author.image}}" alt="profile-pic">
+			<img src="{{ user_membership.avatar }}" alt="profile-pic">
+		</div>
+	</div>
+
+	<div class="row">
+			<h2>{{ user.get_full_name }}</h2>
+		<div class="well well-lg col-sm-4 col-md-4">
+
+			  <ul>
+				 <li>Username: {{ user.username }}</li>
+				 <li>Location: {{ user_membership.location }}</li>
+				 <li>Birth Date: {{ user_membership.birth_date }}</li>
+			  </ul>
 		</div>
 	</div>
 
