@@ -5,7 +5,6 @@ import datetime
 
 # Create your models here.
 class Post(models.Model):
-    slug = models.SlugField()
     title = models.CharField(max_length= 50)
     description = models.TextField(max_length=1000)
     author = models.ForeignKey('Author', on_delete=models.CASCADE)

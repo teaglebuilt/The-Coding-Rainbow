@@ -1,13 +1,68 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto|Basic|Exo|Fjalla+One");
+@import url("https://fonts.googleapis.com/css?family=Roboto|Basic|Ubuntu");
+/* CUSTOM */
+
+html {
+    box-sizing: border-box;
+  }
+
+.gradient-btn {
+	position: relative;
+	display: inline-block;
+	padding: 1.2em 2em;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+	color: white;
+}
+.gradient-btn::before {
+        color: white;
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background: linear-gradient(135deg, #6e8efb, #a777e3);
+		border-radius: 4px;
+		transition: box-shadow .5s ease, transform .2s ease;
+		will-change: transform;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+		transform:
+			translateY(var(--ty, 0))
+			rotateX(var(--rx, 0))
+			rotateY(var(--ry, 0))
+			translateZ(var(--tz, -12px));
+	}
+
+.gradient-btn:hover::before {
+		box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+	}
+
+.gradient-btn::after {
+        color: white;
+		position: relative;
+		display: inline-block;
+		content: attr(data-title);
+		transition: transform .2s ease;
+		font-weight: bold;
+		letter-spacing: .01em;
+		will-change: transform;
+		transform:
+			translateY(var(--ty, 0))
+			rotateX(var(--rx, 0))
+			rotateY(var(--ry, 0));
+	}
+
+
 
 /* DEFAULT OVERIDES */
 
 /* TOP NAV */
-
 .top-nav {
     width: 100%;
     height: 80px;
-    background: #8b9dc3;
+    background: #1f3356;
     border-radius: 5px;
 }
 .site-title {
@@ -24,7 +79,7 @@
     float: right;
 }
 #namanyay-search-btn {
-    background:#0099ff;
+    background:#758ef3;
     color:white;
     font: 'trebuchet ms', trebuchet;
     padding:10px 20px;
@@ -50,6 +105,8 @@
 
 /* TOP NAV*/
 
+
+
 /* Course List */
 .page-title {
     font-family: 'Fjalla One', sans-serif;
@@ -67,13 +124,43 @@
     font-size: 32px;
     font-family: 'Basic', sans-serif;
 }
-.course-title a:hover {
-    font-size: 32px;
+.course-img {
+    width: 256px;
+    height: 256px;
+}
+a:hover {
     text-decoration: none;
 }
-.course-description {
-    font-family: 'Roboto', sans-serif;
+
+.list-group {
+    box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34);
 }
+
+.list-group-item {
+    background-color: rgba(255,255,255,0.7);
+    border:0;
+}
+
+.list-group-item:hover  {
+    background-color: #6e8efb;
+    opacity: .9;
+}
+
+
+
+.btn-toolbar {margin-top:10px;}
+
+ul li img {
+  float:left;
+  margin-right:15px;
+  height: 128px;
+  width: 128px;
+}
+
+
+
+
+
 /* COURSE LIST END */
 
 /* NO MEMBER */
@@ -117,3 +204,269 @@
 
 
 /* Post_LIST */
+
+.create-post-btn {
+    float: right;
+}
+
+/* Lesson Detail */
+
+/* .lesson-container {
+    margin: 0;
+    padding: 0;
+    display:flex;
+    background:#7A419B;
+    min-height:100vh;
+    background: linear-gradient(135deg, #7c1599 0%,#921099 48%,#7e4ae8 100%);
+    background-size:cover;
+    align-items: center;
+    justify-content: center;
+} */
+.player {
+    max-width:750px;
+    border:5px solid rgba(0,0,0,0.2);
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
+    position: relative;
+    font-size: 0;
+    overflow: hidden;
+  }
+
+  /* This css is only applied when fullscreen is active. */
+  .player:fullscreen {
+    max-width: none;
+    width: 100%;
+  }
+
+  .player:-webkit-full-screen {
+    max-width: none;
+    width: 100%;
+  }
+
+  .player__video {
+    width: 100%;
+  }
+
+  .player__button {
+    background:none;
+    border:0;
+    line-height:1;
+    color:white;
+    text-align: center;
+    outline:0;
+    padding: 0;
+    cursor:pointer;
+    max-width:50px;
+  }
+
+  .player__button:focus {
+    border-color: #ffc600;
+  }
+
+  .player__slider {
+    width:10px;
+    height:30px;
+  }
+
+  .player__controls {
+    display:flex;
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    transform: translateY(100%) translateY(-5px);
+    transition:all .3s;
+    flex-wrap:wrap;
+    background:rgba(0,0,0,0.1);
+  }
+
+  .player:hover .player__controls {
+    transform: translateY(0);
+  }
+
+  .player:hover .progress {
+    height:15px;
+  }
+
+  .player__controls > * {
+    flex:1;
+  }
+
+  .progress {
+    flex:10;
+    position: relative;
+    display:flex;
+    flex-basis:100%;
+    height:5px;
+    transition:height 0.3s;
+    background:rgba(0,0,0,0.5);
+    cursor:ew-resize;
+  }
+
+  .progress__filled {
+    width:50%;
+    background:#ffc600;
+    flex:0;
+    flex-basis:50%;
+  }
+
+  /* unholy css to style input type="range" */
+
+  input[type=range] {
+    -webkit-appearance: none;
+    background:transparent;
+    width: 100%;
+    margin: 0 5px;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+    background: rgba(255,255,255,0.8);
+    border-radius: 1.3px;
+    border: 0.2px solid rgba(1, 1, 1, 0);
+  }
+  input[type=range]::-webkit-slider-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: #ffc600;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3.5px;
+    box-shadow:0 0 2px rgba(0,0,0,0.2);
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #bada55;
+  }
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+    background: #ffffff;
+    border-radius: 1.3px;
+    border: 0.2px solid rgba(1, 1, 1, 0);
+  }
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background: #ffc600;
+    cursor: pointer;
+  }
+
+/* Create Post */
+
+.title {
+    font-family: 'Fjalla+One', sans-serif;
+}
+.subtitle {
+    font-family: 'Basic', sans-serif;
+}
+
+.form-rounded {
+    border-radius: 1rem;
+}
+.form-label {
+    font-family: 'Roboto', sans-serif;
+    margin: 10px;
+}
+
+/* Profile Page */
+
+.profile-name {
+    font-family: 'Roboto', sans-serif;
+}
+
+.avatar {
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.profile-card {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin: 20px;
+   }
+
+.user-information {
+    list-style: none;
+    padding: 20px;
+}
+
+/* MEMBERSHIP LIST */
+
+.price-table {
+    text-align: center;
+    overflow: hidden;
+    margin: 20px;
+    background: #fff;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, .2), 0 20px 50px rgba(0,0,0,.5);
+    border-radius: 20px;
+}
+
+col-sm-4:nth-child(2) .price-table {
+    transform: scale(1.1);
+}
+.price-table .price-head {
+    padding: 50px;
+    background: linear-gradient(45deg, #f321d6, #5121f3);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.price-table .price-head h4 {
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.price-table h5 {
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.price-content {
+    position: relative;
+}
+
+.price-content ul {
+    position: relative;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.price-content ul li {
+    list-style: none;
+    font-size: 16px;
+    color: #777;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: .5s;
+    padding: 10px 0;
+}
+
+.price-content ul li:hover {
+    border-left: 15px solid #9e02c5;
+    border-right: 15px solid #9e02c5;
+}
+
+.price-button {
+    padding: 0 0 30px;
+}
+.price-button button {
+    padding: 10px 40px;
+    background: linear-gradient(45deg, #f321d6, #5121f3);
+    color: #fff;
+    border-radius: 25px;
+    font-size: 18px;
+    text-transform: uppercase;
+}

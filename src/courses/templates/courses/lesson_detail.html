@@ -1,4 +1,5 @@
 {% extends 'courses/base.html' %}
+{% load static %}
 
 {% block post_detail_link %}
 {% if object is not None %}
@@ -11,19 +12,29 @@
 	<div class='container'>
 		<h1>Lesson Detail View</h1>
 		<div class='row'>
-			<div class='col-sm-6 col-md-6'>
+			<div class='col-md-12'>
 				{% if object is not None %}
 				<h3>{{ object.title }}</h3>
 				<p>{{ object.description }}</p>
+				  <div class="player">
+					<video class="player__video viewer"
+							src="{{ object.video_url.url }}"
+							>
+				      Sorry, your browser doesn't support embedded videos.
+					</video>
 
-				<video controls
-					   controlsList="nodownload"
-					   poster="{{ object.thumbnail.url }}"
-				       src="/static{{ object.video_url }}"
-				       width="300"
-				       height="200">
-				    Sorry, your browser doesn't support embedded videos.
-				</video>
+					<div class="player__controls">
+							<div class="progress">
+							 <div class="progress__filled"></div>
+					</div>
+							<button class="player__button toggle" title="Toggle Play">►</button>
+							<input type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" value="1">
+							<input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
+							<button data-skip="-10" class="player__button">« 10s</button>
+							<button data-skip="25" class="player__button">25s »</button>
+						  </div>
+						</div>
+				</div>
 				{% else %}
 				<h3>Upgrade membership</h3>
 				<p>To view this course you'll need to upgrade your membership</p>
@@ -34,5 +45,5 @@
 			</div>
 		</div>
 	</div>
-
+<script src="{% static 'js/video.js' %}"></script>
 {% endblock content %}

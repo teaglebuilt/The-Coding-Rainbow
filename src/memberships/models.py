@@ -31,10 +31,9 @@ class Membership(models.Model):
 		db_table = 'Membership'
 
 class UserMembership(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, parent_link=True, on_delete=models.CASCADE)
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	bio = models.TextField(max_length=500, blank=True)
 	location = models.CharField(max_length=30, blank=True)
 	birth_date = models.DateField(null=True, blank=True)

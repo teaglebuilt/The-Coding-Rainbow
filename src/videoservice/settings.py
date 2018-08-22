@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'memberships',
     'courses',
     'blog',
+    'embed_video'
 ]
 
 

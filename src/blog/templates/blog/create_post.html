@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+                <h1 class="title">Create a Post</h1>
+                <h4 class="subtitle">Ask questions or share with others what you are learning!</h4>
+                <p class="subtitle">Be descriptive so others can understand and provide feedback</p>
+        </div>
+    </div>
+</div>
+</br>
+</br>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+            <form method="POST" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="form-label">Provide a title that reflects the nature of your post</label>
+                <input type="text" class="form-control form-rounded"
+                 placeholder="Title">
+                 <label class="form-label">To expand the textarea, drag the lower right corner</label>
+                <textarea class="form-control form-rounded"
+                 rows="5"></textarea>
+            </br>
+                 <input type="submit" value="Submit" class="btn btn-primary btn-block"/>
+            </form>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}

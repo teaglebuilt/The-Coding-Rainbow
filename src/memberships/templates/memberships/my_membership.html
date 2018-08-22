@@ -3,31 +3,32 @@
 
 {% block content %}
 <div class="container">
+			<h1 class="title text-center">Your Profile</h1>
+			<a href="" class="gradient-btn create-post-btn"
+			   data-title="Update Profile"></a>
 	<div class="row">
-		<div class="col-sm-6 col-md-6">
-			<h1 class="text-center">My Profile</h1>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-4 col-md-4">
+	  <div class="col-sm-12 text-center">
+		<h2 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h2>
+		{% if usermembership.avatar is None %}
+			<img src="https://s15.postimg.cc/aoc8saijv/placeholder_profile_pic.png"
+			alt="profile-pic" class="avatar">
+		{% else %}
 			<img src="{{ user_membership.avatar }}" alt="profile-pic">
+		{% endif %}
 		</div>
 	</div>
-
 	<div class="row">
-			<h2>{{ user.get_full_name }}</h2>
-		<div class="well well-lg col-sm-4 col-md-4">
+		<div class="col-md-2"></div>
+		<div class="profile-card card-lg col-sm-4 col-md-4">
 
-			  <ul>
-				 <li>Username: {{ user.username }}</li>
-				 <li>Location: {{ user_membership.location }}</li>
-				 <li>Birth Date: {{ user_membership.birth_date }}</li>
+			  <ul class="user-information">
+				 <li><strong>Username:</strong> {{ user.username }}</li>
+				 <li><strong>location:</strong> {{ user_membership.location }}</li>
+				 <li><strong>Birth Date:</strong> {{ user_membership.birth_date }}</li>
+				 <li><strong>Bio:</strong> {{ user_membership.bio }}</li>
 			  </ul>
 		</div>
-	</div>
-
-    <div class="row">
-			<div class="well well-lg col-sm-4 col-md-4">
+			<div class="profile-card card-lg col-sm-4 col-md-4 user-information">
 					{% if user_subscription != None %}
 						<h4>Current Membership: {{ user_membership.membership.membership_type }} <small>since {{ user_subscription.get_created_date }}</small></h4>
 
@@ -42,6 +43,8 @@
 						{% endif %}
 					{% endif %}
 				</div>
-	</div>
+				<div class="col-md-2"></div>
+		  </div>
+
 </div>
 {% endblock content %}

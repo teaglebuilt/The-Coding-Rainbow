@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.db import IntegrityError, transaction
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -9,7 +10,7 @@ from django.views.generic import ListView
 from django.urls import reverse
 
 from .models import Membership, UserMembership, Subscription
-from .forms import UserForm
+from .forms import UserForm, UpdateUserForm
 import stripe
 
 
@@ -68,6 +69,8 @@ def my_membership_view(request):
 		'user_subscription': user_subscription
 	}
 	return render(request, "memberships/my_membership.html", context)
+
+
 
 def get_user_membership(request):
     user_membership_qs = UserMembership.objects.filter(user=request.user)
