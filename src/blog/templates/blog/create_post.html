@@ -17,17 +17,12 @@
       <div class="col-md-6">
             <form method="POST" action="." enctype="multipart/form-data">
                 {% csrf_token %}
-                <label class="form-label">Provide a title that reflects the nature of your post</label>
-                <input type="text" class="form-control form-rounded"
-                 placeholder="Title">
-                 <label class="form-label">To expand the textarea, drag the lower right corner</label>
-                <textarea class="form-control form-rounded"
-                 rows="5"></textarea>
+                {{ form.as_p }}
             </br>
-                 <input type="submit" value="Submit" class="btn btn-primary btn-block"/>
+                 <input type="submit" value="submit" class="btn btn-primary btn-block"/>
             </form>
       </div>
     </div>
 </div>
 
-{% endblock content %}
+{% endblock %}

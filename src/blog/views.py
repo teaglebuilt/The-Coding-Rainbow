@@ -7,6 +7,7 @@ from django.template import RequestContext
 from .models import Post, Author
 from .forms import PostModelForm
 
+
 # Create your views here.
 def posts_list(request):
     all_posts = Post.objects.all()
@@ -16,8 +17,8 @@ def posts_list(request):
     return render(request, 'blog/posts_list.html', context)
 
 
-def posts_detail(request, id):
-    instance = get_object_or_404(Post, id=id)
+def post_detail(request, slug):
+    instance = get_object_or_404(Post, slug=slug)
     context = {
         'instance': instance
     }
@@ -25,39 +26,37 @@ def posts_detail(request, id):
 
 
 def create_post(request):
-    # author, created = Author.objects.get_or_create(
-    #     user=request.user,
-    #     name=request.user.first_name,
-    #     membership= author.membership.membership_type)
+    author, created = Author.objects.get_or_create(
+        user=request.user)
     form = PostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
        form.instance.author = author
        form.save()
-       messages.info(request, 'Successfully created a new blog post!')
        return redirect('/blog/')
 
     context = {
+
         'form': form
     }
     return render(request, "blog/create_post.html", context)
 
-    def posts_update(request, id):
-        instance = get_object_or_404(Post, id=id)
-        form = PostModelForm(request.POST or None, instance=instance)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return HttpResponseRedirect(instance.get_absolute_url())
+def post_update(request, slug):
+	unique_post = get_object_or_404(Post, slug=slug)
+	form = PostModelForm(request.POST or None,
+						request.FILES or None,
+						instance=unique_post)
+	if form.is_valid():
+		form.save()
+		return redirect('/blog/')
 
-        context = {
-            'instance': instance,
-            'form': form
-        }
-
-        return render(request, 'blog/create_post.html', context)
+	context = {
+		'form': form
+	}
+	return render(request, "blog/create_post.html", context)
 
 
-    def posts_delete(request, id):
-        instance = get_object_or_404(Post, id=id)
-        instance = delete()
-        return redirect('/blog/')
+
+def post_delete(request, slug):
+    unique_post = get_object_or_404(Post, slug=slug)
+    unique_post.delete()
+    return redirect('/blog/')

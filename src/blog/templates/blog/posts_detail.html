@@ -11,6 +11,7 @@
     <h1>{{ instance.updated }}</h1>
     <h1>{{ instance.image }}</h1>
 
-
+    <button class="btn btn-default btn-primary button"><a href="{{ instance.get_update_url }}">Update</a></button>
+	<button class="btn btn-default btn-danger button"><a href="{{ instance.get_delete_url }}">Delete</a></button>
 
 {% endblock  %}
