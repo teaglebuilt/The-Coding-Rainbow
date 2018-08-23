@@ -10,8 +10,8 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                     <div class="search-box">
-                      <form id="searchthis" action="/search" style="display:inline;" method="get">
-                        <input id="namanyay-search-box" name="q" size="40" type="text" placeholder="search for it"/>
+                      <form id="searchthis" action="/blog" style="display:inline;" method="get">
+                        <input id="namanyay-search-box" value="{{ request.GET.q }}" name="q" size="40" type="text" placeholder="search for it"/>
                         <input id="namanyay-search-btn" value="Search" type="submit"/>
                       </form>
                     </div>
