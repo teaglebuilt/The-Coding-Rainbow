@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.views.generic import ListView
 from django.urls import reverse
-
+from blog.models import Author
 from .models import Membership, UserMembership, Subscription
 from .forms import UserForm, UpdateUserForm
 import stripe
@@ -20,9 +20,7 @@ def register_view(request):
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
             user = user_form.save()
-
             user.set_password(user.password)
-
             user.save()
             registered = True
 

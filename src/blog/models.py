@@ -12,7 +12,7 @@ class Post(models.Model):
     title = models.CharField(max_length= 50)
     description = models.TextField(max_length=1000)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     author = models.ForeignKey('Author', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/%Y/%m/$D/', null=True, blank=True)
 
@@ -31,6 +31,7 @@ class Post(models.Model):
 
     class Meta:
             db_table = 'Post'
+
 
 
 def create_slug(instance, new_slug=None):
@@ -58,7 +59,6 @@ pre_save.connect(pre_save_post_reciever, sender=Post)
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    membership = models.ForeignKey(UserMembership, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

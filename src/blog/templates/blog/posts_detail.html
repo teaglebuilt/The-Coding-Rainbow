@@ -1,17 +1,37 @@
 {% extends 'blog/base.html' %}
 
+
+
 {% block content %}
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="text-center">{{ instance.title }}<small>Created:{{ instance.timestamp}}</small></h1>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-sm-12">
+        <h3 class="text-center">Written By:<small>{{ instance.author }}</small></h3>
+        <h3 class="text-center">Updated On:<small>{{ instance.updated }}</small></h3>
+    </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-center">{{ instance.description }}</p>
+            <img src="{{ instance.image.url }}">
+        </div>
+    </div>
 
-    <h1>{{ instance.title }}</h1>
-    <h1>{{ instance.description }}</h1>
-    <h1>{{ instance.author }}</h1>
-    <h1>{{ instance.timestamp }}</h1>
-    <h1>{{ instance.updated }}</h1>
-    <h1>{{ instance.image }}</h1>
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-default btn-primary button"><a href="{{ instance.get_update_url }}">Update</a></button>
+	    <button class="btn btn-default btn-danger button"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+    </div>
+</div>
+{% else %}
 
-    <button class="btn btn-default btn-primary button"><a href="{{ instance.get_update_url }}">Update</a></button>
-	<button class="btn btn-default btn-danger button"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+You can only update your own posts
 
+{% endif %}
 {% endblock  %}

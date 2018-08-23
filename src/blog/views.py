@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import logout, login, authenticate
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -10,9 +11,18 @@ from .forms import PostModelForm
 
 # Create your views here.
 def posts_list(request):
-    all_posts = Post.objects.all()
+    queryset_list = Post.objects.all()
+    paginator = Paginator(queryset_list, 3)
+    page = request.GET.get("page")
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
     context = {
-        'all_posts': all_posts
+        'object_list': queryset
     }
     return render(request, 'blog/posts_list.html', context)
 

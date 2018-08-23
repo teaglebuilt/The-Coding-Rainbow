@@ -34,9 +34,6 @@ class UserMembership(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
-	bio = models.TextField(max_length=500, blank=True)
-	location = models.CharField(max_length=30, blank=True)
-	birth_date = models.DateField(null=True, blank=True)
 	avatar = models.ImageField(upload_to='media_root', blank=True)
 
 
@@ -55,7 +52,7 @@ def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
 		user_membership.stripe_customer_id = new_customer_id['id']
 		user_membership.save()
 
-post_save.connect(post_save_usermembership_create, sender=settings.AUTH_USER_MODEL)
+post_save.connect(post_save_usermembership_create, sender=User)
 
 
 

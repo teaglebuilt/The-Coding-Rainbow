@@ -30,32 +30,32 @@
    </div>
   <div class="row">
     <div class="col-md-8">
-        {% for post in all_posts %}
+        {% for object in object_list %}
             <article id="">
               <header>
                 <div class="meta">
-                  Written by<span class="author">{{ posts.author }}
+                  <strong>Written by:</strong> <span class="author">{{ object.author }}
                   </span> <span class="date"></span>
                 </div>
-                <h2>{{ post.title }}</h2>
+                <h2>{{ object.title }}</h2>
               </header>
               <div class="entry-content">
 
-            {% if post.image %}
+            {% if object.image %}
 
-                  <img src="{{ post.image.url }}" alt="" class="img-fluid post-image"
+                  <img src="{{ object.image.url }}" alt="" class="img-fluid post-image"
                    style="max-width:600px;max-height:600px;"/>
 
-                <p class="lead">{{ post.description }}&hellip;</p>
-                <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read More
+                <p class="lead">{{ object.description }}&hellip;</p>
+                <a href="{{ object.get_absolute_url }}" class="btn btn-primary">Read More
                 <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true">
                 </span></a>
 
             {% else %}
 
-                <p class="lead">{{ post.description }}&hellip;</p>
+                <p class="lead">{{ object.description }}&hellip;</p>
 
-                <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read More <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                <a href="{{ object.get_absolute_url }}" class="btn btn-primary">Read More <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             {% endif %}
               </div>
               <footer>
@@ -63,6 +63,21 @@
             </article>
     {% endfor %}
 
+    <div class="pagination">
+      <span class="step-links">
+        {% if object_list.has_previous %}
+          <a href="?page={{ object_list.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ object.list_number }} of {{ object_list.paginator.number }}
+        </span>
+
+        {% if object_list.has_next %}
+          <a href="?page={{ object_list.next_page_number }}">Next</a>
+        {% endif %}
+      </span>
+    </div>
           </div>
     <aside class="col-sm-4 col-md-4 col-lg-4">
 

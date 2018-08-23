@@ -74,6 +74,10 @@ html {
     text-decoration: none;
 }
 
+.nav-user {
+    color: white;
+    margin-top: 40px;
+}
 .search-box {
     margin-top: 20px;
     float: right;
