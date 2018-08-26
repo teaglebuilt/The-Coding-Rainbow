@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from memberships.models import UserMembership
@@ -13,8 +12,9 @@ class Post(models.Model):
     description = models.TextField(max_length=1000)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
-    author = models.ForeignKey('Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(UserMembership, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/%Y/%m/$D/', null=True, blank=True)
+    likes = models.ManyToManyField(UserMembership, blank=True, related_name='post_likes')
 
 
     def __str__(self):
@@ -28,6 +28,12 @@ class Post(models.Model):
 
     def get_delete_url(self):
         return reverse('blog:delete', kwargs={ "slug": self.slug })
+
+    def get_like_url(self):
+        return reverse('blog:like', kwargs={ "slug": self.slug })
+
+    def get_api_like_url(self):
+        return reverse('blog:like_api', kwargs={ "slug": self.slug })
 
     class Meta:
             db_table = 'Post'
@@ -54,14 +60,3 @@ def pre_save_post_reciever(sender, instance, *args, **kwargs):
     instance.slug = slug
 
 pre_save.connect(pre_save_post_reciever, sender=Post)
-
-
-class Author(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'Author'

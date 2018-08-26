@@ -1,0 +1,9 @@
+{% extends "memberships/base.html" %} {% block content %}
+<h1>Welcome home</h1>
+<p>Check out our
+    <a href="{% url 'courses:list' %}">courses</a>
+</p>
+<p>Check out our
+    <a href="{% url 'blog:blog' %}">blog posts</a>
+</p>
+{% endblock %}

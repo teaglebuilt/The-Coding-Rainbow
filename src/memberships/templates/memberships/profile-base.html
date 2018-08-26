@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userprofile.css' %}">
+    <title>Membership</title>
+</head>
+<body>
+    {% include 'courses/navbar.html' %}
+    {% include 'courses/messages.html' %}
+    {% if not request.user.is_authenticated %}
+    <div class="container">
+     <nav class="breadcrumb">
+            <ol class='breadcrumb'>
+                <li class='pull-left'><a href="{% url 'memberships:register' %}">Register</a></li>
+                <li class='pull-right'><a href="{% url 'memberships:login' %}">Login</a></li>
+                <li class='pull-right'><a href='/memberships'>Memberships</a></li>
+            </ol>
+     </nav>
+    </div>
+    {% else %}
+    <div class="container">
+            <ol class='breadcrumb'>
+                <li><a href='/courses'>Courses</a></li>
+                <li><a href='/blog'>Blog</a></li>
+                <li><a href='/memberships/my_membership/'>View Membership Details</a></li>
+                    {% block post_detail_link %}
+                    {% endblock %}
+                <li class='pull-right'><a href="{% url 'memberships:logout' %}">Logout</a></li>
+                <li class='pull-right'><a href='/memberships'>Memberships</a></li>
+            </ol>
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+            {% block profile %}
+
+            {% endblock %}
+    </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+</body>
+</html>

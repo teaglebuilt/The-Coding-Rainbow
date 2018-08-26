@@ -2,25 +2,30 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import logout, login, authenticate
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.views.generic import RedirectView
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
 
-from .models import Post, Author
+from .models import Post
+from memberships.views import get_user_membership
 from .forms import PostModelForm
 
 
-# Create your views here.
 def posts_list(request):
-    queryset_list = Post.objects.all().order_by("-timestamp")
+    queryset_list = Post.objects.all()
     query = request.GET.get('q')
     if query:
         queryset_list = queryset_list.filter(
             Q(title__icontains=query)
             ).distinct()
     paginator = Paginator(queryset_list, 3)
-    page = request.GET.get("page")
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -28,8 +33,13 @@ def posts_list(request):
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
 
+    # get the last 3 posts
+    recent_posts = Post.objects.order_by('-timestamp')[0:3]
+
     context = {
-        'object_list': queryset
+        'all_posts': queryset,
+        'page_request_var': page_request_var,
+        'recent_posts': recent_posts
     }
     return render(request, 'blog/posts_list.html', context)
 
@@ -42,20 +52,68 @@ def post_detail(request, slug):
     return render(request, 'blog/posts_detail.html', context)
 
 
-def create_post(request):
-    author, created = Author.objects.get_or_create(
-        user=request.user)
-    form = PostModelForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-       form.instance.author = author
-       form.save()
-       return redirect('/blog/')
+class PostLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        slug = self.kwargs.get('slug')
+        obj = get_object_or_404(Post, slug=slug)
+        url_ = obj.get_absolute_url()
+        user = obj.author
+        if user:
+            if user in obj.likes.all():
+                obj.likes.remove(user)
+            else:
+                obj.likes.add(user)
+        return url_
 
-    context = {
 
-        'form': form
-    }
+class PostLikeAPIToggle(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, slug=None, format=None):
+        # slug = self.kwargs.get('slug')
+        obj = get_object_or_404(Post, slug=slug)
+        url_ = obj.get_absolute_url()
+        user = obj.author
+        updated = False
+        liked = False
+        if user:
+            if user in obj.likes.all():
+                liked = False
+                obj.likes.remove(user)
+            else:
+                liked = True
+                obj.likes.add(user)
+                updated = True
+        data = {
+            "updated": updated,
+            "liked": liked
+        }
+
+        return Response(data)
+
+
+@login_required
+def post_create(request):
+    form = PostModelForm()
+    if request.POST:
+        form = PostModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.author = get_user_membership(request)
+            form.instance.save()
+        post = get_object_or_404(Post, slug=form.instance.slug)
+        return redirect(post.get_absolute_url())
+
+    context = {'form': form}
     return render(request, "blog/create_post.html", context)
+
+
 
 def post_update(request, slug):
 	unique_post = get_object_or_404(Post, slug=slug)
@@ -72,8 +130,7 @@ def post_update(request, slug):
 	return render(request, "blog/create_post.html", context)
 
 
-
 def post_delete(request, slug):
     unique_post = get_object_or_404(Post, slug=slug)
     unique_post.delete()
-    return redirect('/blog/')
+    return redirect('posts:list')

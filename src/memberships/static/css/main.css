@@ -1,6 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto|Basic|Ubuntu");
 /* CUSTOM */
-
+button a {
+    color: white;
+    text-decoration: none;
+}
+button a:hover {
+    color: white;
+    text-decoration: none;
+}
 html {
     box-sizing: border-box;
   }
@@ -213,6 +220,20 @@ ul li img {
     float: right;
 }
 
+
+.post-author {
+    margin-top: 20px;
+}
+#label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.author {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding: 10px;
+}
+
 /* Lesson Detail */
 
 /* .lesson-container {
@@ -364,14 +385,33 @@ ul li img {
   }
 
 /* Create Post */
-
+#post {
+    position: relative;
+    border-radius: 10px;
+    background: whitesmoke;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    margin: 20px;
+}
+.entry-content {
+    margin: 10px;
+}
 .title {
     font-family: 'Fjalla+One', sans-serif;
 }
 .subtitle {
     font-family: 'Basic', sans-serif;
 }
-
+.post-image {
+    padding: 10px;
+}
+.lead {
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+.post-footer {
+    margin: 10px;
+}
 .form-rounded {
     border-radius: 1rem;
 }
@@ -380,6 +420,25 @@ ul li img {
     margin: 10px;
 }
 
+/* POST DETAIL */
+.detail-well {
+    padding: 60px;
+}
+.detail-title {
+    font-family: 'Basic', sans-serif;
+    padding: 10px;
+}
+.image-detail {
+    border-radius: 10px;
+    margin: 20px;
+}
+.detail-descr {
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+.detail-btns {
+    float: right;
+}
 /* Profile Page */
 
 .profile-name {

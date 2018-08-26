@@ -4,31 +4,71 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<div class="well well-lg detail-well">
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="text-center">{{ instance.title }}<small>Created:{{ instance.timestamp}}</small></h1>
+        <h1 class="text-center detail-title">{{ instance.title }}</h1>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
-        <h3 class="text-center">Written By:<small>{{ instance.author }}</small></h3>
-        <h3 class="text-center">Updated On:<small>{{ instance.updated }}</small></h3>
+    <div class="col-md-4">
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <img src="{{ instance.image.url }}">
-            <p class="text-center">{{ instance.description|linebreaks}}</p>
-        </div>
+    <div class="col-md-4">
+       <small>Created:{{ instance.timestamp}}</small>
+       <small>Written By:{{ instance.user.get_full_name }}</small>
+       <small>Updated On:{{ instance.updated }}</small>
+    </div>
+    <div class="col-md-4">
 
     </div>
-
+</div>
+{% if instance.image %}
 <div class="row">
-    <div class="col-sm-12">
-        <button class="btn btn-default btn-primary button"><a href="{{ instance.get_update_url }}">Update</a></button>
-	    <button class="btn btn-default btn-danger button"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+  <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <img class="img-responsive image-detail" src="{{ instance.image.url }}">
     </div>
+  <div class="col-md-4"></div>
+</div>
+   <div class="row">
+     <div class="col-md-2"></div>
+       <div class="col-md-8">
+            <p class="text-center detail-descr">
+             <strong>
+                 {{ instance.description}}
+             </strong>
+            </p>
+       </div>
+     <div class="col-md-2"></div>
+   </div>
+{% else %}
+   <div class="row">
+        <div class="col-md-12">
+             <p class="text-center">{{ instance.description}}</p>
+        </div>
+    </div>
+{% endif %}
+<div class="row">
+    <div class="col-md-10 col-sm-offset-2">
+        <div class="fb-comments" data-href="{{ request.build_absolute.uri }}" data-numposts="5"></div>
+    </div>
+</div>
+
+<div class="row detail-btns">
+
+
+ <div class="col-md-12">
+        <a href="{{ instance.get_like_url }}"
+        class="like-btn btn btn-success" data-href="{{ instance.get_api_like_url }}">
+        Like
+        <span>{{ instance.likes.count }}</span>
+    </a>
+    <button class="btn btn-default btn-primary"><a href="{{ instance.get_update_url }}">Update</a></button>
+    <button class="btn btn-default btn-danger"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+</div>
+
+ </div>
 </div>
 {% else %}
 

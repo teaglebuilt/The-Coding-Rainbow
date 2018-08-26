@@ -1,21 +1,38 @@
-from django.contrib.auth.models import User
 from django import forms
+
 from .models import UserMembership
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name',)
+        model = UserMembership
+        fields = ('first_name', 'last_name', 'bio',
+                  'location', 'birth_date', 'avatar')
 
-class UpdateUserForm(forms.ModelForm):
-    username = forms.CharField(required=True)
-    email = forms.EmailField(required=True)
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
+
+class AvatarChangeForm(forms.ModelForm):
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'class': 'form-control'
+        }
+    ))
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'class': 'form-control'
+        }
+    ))
+    location = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'class': 'form-control'
+        }
+    ))
+    bio = forms.CharField(widget=forms.Textarea(
+        attrs = {
+            'class': 'form-control'
+        }
+    ))
 
     class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        model = UserMembership
+        fields = ('avatar', 'first_name', 'last_name', 'bio', 'location')

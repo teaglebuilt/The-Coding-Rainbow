@@ -3,6 +3,13 @@ from memberships.models import Membership
 from django.urls import reverse
 
 
+def get_membership_instance(type):
+    qs = Membership.objects.filter(membership_type=type)
+    if qs.exists():
+        return qs[0]
+    return None
+
+
 class Course(models.Model):
     slug = models.SlugField()
     title = models.CharField(max_length=120)

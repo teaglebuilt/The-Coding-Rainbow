@@ -1,16 +1,16 @@
 {% load static %}
-<div class="container d-flex">
+<div class="container-fluid">
     <div class="row">
             <div class="top-nav">
                 <div class="col-sm-2 col-md-2 col-lg-2">
                     <h1 class="site-title">DIGITAL POOP</h1>
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-4">
-
-                </div>
+                        <!-- <h4 class="nav-user">Hello, {{ user.get_full_name }}</h4> -->
+                    </div>
                 <div class="col-sm-6 col-md-6">
                     <div class="search-box">
-                      <form id="searchthis" action="/blog" style="display:inline;" method="get">
+                      <form id="searchthis" action="/blog/" style="display:inline;" method="get">
                         <input id="namanyay-search-box" value="{{ request.GET.q }}" name="q" size="40" type="text" placeholder="search for it"/>
                         <input id="namanyay-search-btn" value="Search" type="submit"/>
                       </form>

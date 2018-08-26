@@ -13,9 +13,16 @@
 </head>
 
 <body>
-    {% include 'blog/navbar.html' %}
-    {% include 'courses/messages.html' %}
-    {% if not request.user.is_authenticated %}
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script> {% include 'blog/navbar.html' %} {% include 'courses/messages.html' %}
+
+{% if not request.user.is_authenticated %}
 
     <div class="container">
         <nav class="breadcrumb">
@@ -36,42 +43,69 @@
 
     {% else %}
 
-            <div class="container">
-                <ol class='breadcrumb'>
-                    <li>
-                        <a href='/courses'>Courses</a>
-                    </li>
-                    <li>
-                        <a href='/blog'>Blog</a>
-                    </li>
-                    <li>
-                        <a href='/memberships/my_membership/'>View Membership Details</a>
-                    </li>
-                    {% block post_detail_link %} {% endblock %}
-                    <li class='pull-right'>
-                        <a href="{% url 'memberships:logout' %}">Logout</a>
-                    </li>
-                    <li class='pull-right'>
-                        <a href='/memberships'>Memberships</a>
-                    </li>
-                </ol>
-            </div>
+    <div class="container">
+        <ol class='breadcrumb'>
+            <li>
+                <a href='/courses'>Courses</a>
+            </li>
+            <li>
+                <a href='/blog'>Blog</a>
+            </li>
+            <li>
+                <a href='/memberships/my_membership/'>View Membership Details</a>
+            </li>
+            {% block post_detail_link %} {% endblock %}
+            <li class='pull-right'>
+                <a href="{% url 'memberships:logout' %}">Logout</a>
+            </li>
+            <li class='pull-right'>
+                <a href='/memberships'>Memberships</a>
+            </li>
+        </ol>
+    </div>
 
     {% endif %}
 
-<div class="container">
-        {% block content%}
+    <div class="container-fluid">
+        {% block content%} {% endblock content%}
+    </div>
 
-        {% endblock content%}
-</div>
+<script>
+        function updateText(btn, newCount, verb) {
+            btn.text(newCount + "" + verb)
+        }
+        $(".like-btn").click(function (e) {
+            e.preventDefault()
+            const this_ = $(this)
+            const likeUrl = this_.attr("data-href")
+            const likeCount = parseInt(this_.attr("data-likes"))
+            const addLike = likeCount + 1
+            const removeLike = likeCount - 1
+            $.ajax({
+                url: likeUrl,
+                method: "GET",
+                data: {},
+                success: function (data) {
+                    console.log(data)
+                    var newLikes;
+                    if (data.liked) {
+                        updateText(this_, addLike, "unlike")
+                    } else {
+                        newLikes = likeCount - 1
+                        updateText(this_, removeLike, "like")
+                    }
+                }, errors: function (error) {
+                    console.log(error)
+                    console.log("error")
+                }
+            })
 
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-    <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        })
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
 </body>

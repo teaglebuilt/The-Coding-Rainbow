@@ -24,10 +24,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'rest_framework',
+
     'memberships',
     'courses',
     'blog',
-    'embed_video'
 ]
 
 
@@ -46,7 +53,7 @@ ROOT_URLCONF = 'videoservice.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,12 +66,6 @@ TEMPLATES = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = (
-#     # Needed to login by username in Django admin, regardless of `allauth`
-#     'django.contrib.auth.backends.ModelBackend',
-#     # `allauth` specific authentication methods, such as login by e-mail
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# )
 
 WSGI_APPLICATION = 'videoservice.wsgi.application'
 
@@ -139,3 +140,11 @@ else:
     # live keys
     STRIPE_PUBLISHABLE_KEY = ''
     STRIPE_SECRET_KEY = ''
+
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)

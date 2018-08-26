@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
 
+
+
 {% block content %}
 {% if not request.user.is_authenticated %}
 <div class="container">
@@ -30,54 +32,65 @@
    </div>
   <div class="row">
     <div class="col-md-8">
-        {% for object in object_list %}
-            <article id="">
+        {% for post in all_posts %}
+            <article id="post">
               <header>
                 <div class="meta">
-                  <strong>Written by:</strong> <span class="author">{{ object.author }}
+                    <h2 class="text-center">{{ post.title }}</h2>
+                    <div class="row inline">
+                        {% if post.image %}
+                        <div class="col-md-2">
+                            <img height="100" width="100" class="img-responsive img-circle" src="{{ post.author.avatar.url }}" alt='author-avatar'
+                            />
+                        </div>
+                        <div class="col-md-4 post-author">
+                            <strong id="label">Written by:</strong><span class="author">{{ post.author.first_name }}</span>
+                        </div>
+                    </div>
+
                   </span> <span class="date"></span>
                 </div>
-                <h2>{{ object.title }}</h2>
               </header>
               <div class="entry-content">
 
-            {% if object.image %}
-
-                  <img src="{{ object.image.url }}" alt="" class="img-fluid post-image"
-                   style="max-width:600px;max-height:600px;"/>
-
-                <p class="lead">{{ object.description }}&hellip;</p>
-                <a href="{{ object.get_absolute_url }}" class="btn btn-primary">Read More
+                <p class="lead">{{ post.description }}&hellip;</p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-primary pull-right">Read More
                 <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true">
                 </span></a>
 
             {% else %}
-
-                <p class="lead">{{ object.description }}&hellip;</p>
-
-                <a href="{{ object.get_absolute_url }}" class="btn btn-primary">Read More <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                <p class="lead">{{ post.description|truncatechars:20 }}&hellip;</p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-primary pull-right">Read More <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             {% endif %}
               </div>
-              <footer>
-              </footer>
+              <hr>
+          <footer class="post-footer">
+
+              <a href="{{ post.get_like_url }}"
+              class="like-btn btn btn-success" data-href="{{ post.get_api_like_url }}">
+              Like
+              <span>{{ post.likes.count }}</span>
+              </a>
+          </footer>
             </article>
     {% endfor %}
 
     <div class="pagination">
       <span class="step-links">
-        {% if object_list.has_previous %}
-          <a href="?page={{ object_list.previous_page_number }}">Previous</a>
+        {% if all_posts.has_previous %}
+        <a href="?{{ page_request_var }}={{ all_posts.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
-          Page {{ object.list_number }} of {{ object_list.paginator.number }}
+          Page {{ all_posts.number }} of {{ all_posts.paginator.num_pages }}.
         </span>
 
-        {% if object_list.has_next %}
-          <a href="?page={{ object_list.next_page_number }}">Next</a>
+        {% if all_posts.has_next %}
+        <a href="?{{ page_request_var }}={{ all_posts.next_page_number }}">next</a>
         {% endif %}
       </span>
     </div>
+
           </div>
     <aside class="col-sm-4 col-md-4 col-lg-4">
 
@@ -100,30 +113,23 @@
 
         </div>
 
-            <h3>Recent Posts</h3>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, optio eum &hellip;
-                </p>
-              </a>
-            </div>
+        <h3>Recent Posts</h3>
+        <div>
+          {% for obj in recent_posts %}
+          <h4 class="list-group-item-heading">
+            <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
+          </h4>
+          <p class="list-group-item-text">
+            {{ obj.description|truncatechars:20 }}
+          </p>
+          <hr> {% endfor %}
+        </div>
+      </div>
 
           </aside>
         </div>
     </div>
 
-    {% comment %} <nav>
-        <ul class="pagination">
-          <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-          <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-        </ul>
-      </nav> {% endcomment %}
 
 {% endif %}
 

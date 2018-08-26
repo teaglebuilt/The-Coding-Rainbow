@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from datetime import datetime
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+User = get_user_model()
 
 MEMBERSHIP_CHOICES = (
 	('Enterprise', 'ent'),
@@ -31,9 +32,14 @@ class Membership(models.Model):
 		db_table = 'Membership'
 
 class UserMembership(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
+	first_name = models.CharField(max_length=20)
+	last_name = models.CharField(max_length=20)
+	bio = models.TextField(max_length=500, blank=True)
+	location = models.CharField(max_length=30, blank=True)
+	birth_date = models.DateField(null=True, blank=True)
 	avatar = models.ImageField(upload_to='media_root', blank=True)
 
 
@@ -42,18 +48,23 @@ class UserMembership(models.Model):
 
 
 def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
-	if created:
-		UserMembership.objects.get_or_create(user=instance)
+    if created:
+        UserMembership.objects.get_or_create(user=instance)
 
-	user_membership, created = UserMembership.objects.get_or_create(user=instance)
+    user_membership, created = UserMembership.objects.get_or_create(
+        user=instance)
+    free_membership = Membership.objects.filter(
+        membership_type='Free').first()  # get the free membership instance
+    if user_membership.stripe_customer_id is None or user_membership.stripe_customer_id == '':
+        new_customer_id = stripe.Customer.create(email=instance.email)
+        user_membership.stripe_customer_id = new_customer_id['id']
+        # assign the membership of the user to the free membership on signup
+        user_membership.membership = free_membership
+        user_membership.save()
 
-	if user_membership.stripe_customer_id is None or user_membership.stripe_customer_id == '':
-		new_customer_id = stripe.Customer.create(email=instance.email)
-		user_membership.stripe_customer_id = new_customer_id['id']
-		user_membership.save()
 
-post_save.connect(post_save_usermembership_create, sender=User)
-
+post_save.connect(post_save_usermembership_create,
+                  sender=settings.AUTH_USER_MODEL)
 
 
 class Subscription(models.Model):

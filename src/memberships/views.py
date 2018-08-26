@@ -8,9 +8,9 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.views.generic import ListView
 from django.urls import reverse
-from blog.models import Author
+from blog.models import Post
 from .models import Membership, UserMembership, Subscription
-from .forms import UserForm, UpdateUserForm
+from .forms import UserForm, AvatarChangeForm
 import stripe
 
 
@@ -60,14 +60,27 @@ def user_logout_view(request):
 
 
 def my_membership_view(request):
-	user_membership = get_user_membership(request)
-	user_subscription = get_user_subscription(request)
-	context = {
-		'user_membership': user_membership,
-		'user_subscription': user_subscription
-	}
-	return render(request, "memberships/my_membership.html", context)
+    user_membership = get_user_membership(request)
+    user_subscription = get_user_subscription(request)
+    user_posts = Post.objects.filter(author=user_membership)
 
+    avatar_form = AvatarChangeForm()
+    if request.method == "POST":
+        avatar_form = AvatarChangeForm(request.POST, request.FILES)
+        if avatar_form.is_valid():
+            user_membership.avatar = avatar_form.cleaned_data.get('avatar')
+            user_membership.first_name = avatar_form.cleaned_data.get('first_name')
+            user_membership.last_name = avatar_form.cleaned_data.get('last_name')
+            user_membership.bio = avatar_form.cleaned_data.get('bio')
+            user_membership.location = avatar_form.cleaned_data.get('location')
+            user_membership.save()
+    context = {
+		'user_membership': user_membership,
+        'user_subscription': user_subscription,
+        'posts': user_posts,
+        'avatar_form': avatar_form
+    }
+    return render(request, "memberships/my_membership.html", context)
 
 
 def get_user_membership(request):
@@ -115,14 +128,9 @@ class MembershipSelectView(ListView):
         print(selected_membership_qs)
         selected_membership = selected_membership_qs.first()
         print(selected_membership)
-        '''
-		==========
-		VALIDATION
-		==========
-		'''
 
         if user_membership.membership == selected_membership:
-            if user_subscription != None:
+            if user_subscription is None:
                 messages.info(request, "You already have this membership. Your \
 					next payment is due {}".format('get this value from stripe'))
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -152,7 +160,7 @@ def PaymentView(request):
                         "plan": selected_membership.stripe_plan_id,
                     },
                 ],
-				trial_period_days= 100
+                trial_period_days=100
             )
 
             return redirect(reverse('memberships:update-transactions',
@@ -193,26 +201,27 @@ def updateTransactionRecords(request, subscription_id):
         selected_membership))
     return redirect('/memberships')
 
+
 def cancelSubscription(request):
-	user_sub = get_user_subscription(request)
+    user_sub = get_user_subscription(request)
 
-	if user_sub.active == False:
-		messages.info(request, "You dont have an active membership")
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if user_sub.active is False:
+        messages.info(request, "You dont have an active membership")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-	sub = stripe.Subscription.retrieve(user_sub.stripe_subscription_id)
-	sub.delete()
+    sub = stripe.Subscription.retrieve(user_sub.stripe_subscription_id)
+    sub.delete()
 
-	user_sub.active = False
-	user_sub.save()
+    user_sub.active = False
+    user_sub.save()
 
+    free_membership = Membership.objects.filter(membership_type='Free').first()
+    user_membership = get_user_membership(request)
+    user_membership.membership = free_membership
+    user_membership.save()
 
-	free_membership = Membership.objects.filter(membership_type='Free').first()
-	user_membership = get_user_membership(request)
-	user_membership.membership = free_membership
-	user_membership.save()
+    messages.info(
+        request, "Successfully cancelled membership. We have sent an email")
+    # sending an email here
 
-	messages.info(request, "Successfully cancelled membership. We have sent an email")
-	# sending an email here
-
-	return redirect('/memberships')
+    return redirect('/memberships')
