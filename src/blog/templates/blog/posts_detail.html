@@ -59,8 +59,8 @@
 
 
  <div class="col-md-12">
-        <a href="{{ instance.get_like_url }}"
-        class="like-btn btn btn-success" data-href="{{ instance.get_api_like_url }}">
+    <a href="{{ instance.get_like_url }}" data-likes="{{ instance.likes.count }}"
+     class="like-btn btn btn-success" data-href="{{ instance.get_api_like_url }}">
         Like
         <span>{{ instance.likes.count }}</span>
     </a>

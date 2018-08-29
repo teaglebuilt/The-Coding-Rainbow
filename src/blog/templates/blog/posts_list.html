@@ -40,8 +40,10 @@
                     <div class="row inline">
                         {% if post.image %}
                         <div class="col-md-2">
+
                             <img height="100" width="100" class="img-responsive img-circle" src="{{ post.author.avatar.url }}" alt='author-avatar'
                             />
+
                         </div>
                         <div class="col-md-4 post-author">
                             <strong id="label">Written by:</strong><span class="author">{{ post.author.first_name }}</span>
@@ -66,10 +68,10 @@
               <hr>
           <footer class="post-footer">
 
-              <a href="{{ post.get_like_url }}"
+              <a href="{{ post.get_like_url }}" data-likes="{{ post.likes.count }}"
               class="like-btn btn btn-success" data-href="{{ post.get_api_like_url }}">
               Like
-              <span>{{ post.likes.count }}</span>
+                <span>{{ post.likes.count }}</span>
               </a>
           </footer>
             </article>

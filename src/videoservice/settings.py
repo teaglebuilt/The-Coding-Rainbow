@@ -29,14 +29,19 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+
+    'django_extensions',
 
     'rest_framework',
 
     'memberships',
     'courses',
     'blog',
+    'crispy_forms',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,6 +146,9 @@ else:
     STRIPE_PUBLISHABLE_KEY = ''
     STRIPE_SECRET_KEY = ''
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+LOGIN_REDIRECT_URL = "/"
 
 SITE_ID = 1
 

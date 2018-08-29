@@ -20,7 +20,10 @@
             js = d.createElement(s); js.id = id;
             js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1';
             fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script> {% include 'blog/navbar.html' %} {% include 'courses/messages.html' %}
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+{% include 'blog/navbar.html' %}
+{% include 'courses/messages.html' %}
 
 {% if not request.user.is_authenticated %}
 
@@ -28,7 +31,7 @@
         <nav class="breadcrumb">
             <ol class='breadcrumb'>
                 <li class='pull-left'>
-                    <a href="{% url 'memberships:register' %}">Register</a>
+                    <a href="{% url 'memberships:signup' %}">Register</a>
                 </li>
                 <li class='pull-right'>
                     <a href="{% url 'memberships:login' %}">Login</a>
@@ -71,16 +74,19 @@
     </div>
 
 <script>
-        function updateText(btn, newCount, verb) {
-            btn.text(newCount + "" + verb)
-        }
-        $(".like-btn").click(function (e) {
-            e.preventDefault()
-            const this_ = $(this)
-            const likeUrl = this_.attr("data-href")
-            const likeCount = parseInt(this_.attr("data-likes"))
-            const addLike = likeCount + 1
-            const removeLike = likeCount - 1
+$(document).ready(function(){
+    function updateText(btn, newCount, verb) {
+        btn.text(newCount + "" + verb)
+    }
+
+    $(".like-btn").click(function (e) {
+        e.preventDefault()
+        const this_ = $(this)
+        const likeUrl = this_.attr("data-href")
+        const likeCount = parseInt(this_.attr("data-likes")) | 0
+        const addLike = likeCount + 1
+        const removeLike = likeCount - 1
+        if (likeUrl){
             $.ajax({
                 url: likeUrl,
                 method: "GET",
@@ -99,12 +105,18 @@
                     console.log("error")
                 }
             })
+        }
+    })
+})
 
-        })
 </script>
-
+{% block jquery %}
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-
+    <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+{% endblock %}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 

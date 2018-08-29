@@ -116,7 +116,20 @@ html {
 
 /* TOP NAV*/
 
+/* LOGIN */
+.login-container {
+    margin-top: 60px;
+    padding: 60px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
 
+
+.login-btn {
+    margin-left: 20px;
+}
+.login-social {
+    padding-top: 40px;
+}
 
 /* Course List */
 .page-title {

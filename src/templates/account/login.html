@@ -1,0 +1,44 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags  %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}
+{% trans "Sign In" %}
+{% endblock %}
+
+{% block content %}
+
+{% get_providers as socialaccount_providers %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+      <div class="login-container">
+          <form class="login" method="POST" action="{% url 'account_login' %}">
+              {% csrf_token %}
+              {{ form|crispy }}
+              {% if redirect_field_value %}
+              <input class="auth-input" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+              <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+              <button class="login-btn btn btn-primary primaryAction" type="submit">{% trans "Sign In" %}</button>
+            </form>
+
+            <div class="login-social socialaccount_ballot">
+                <div class="fb-login-button" data-width="200" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+                <ul class="socialaccount_providers">
+                  {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </ul>
+            </div>
+
+            {% include "socialaccount/snippets/login_extra.html" %}
+          </div>
+          <div class="col-md-4"></div>
+      </div>
+  </div>
+</div>
+
+
+{% endblock %}

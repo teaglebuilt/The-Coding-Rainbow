@@ -9,56 +9,19 @@ from django.template import RequestContext
 from django.views.generic import ListView
 from django.urls import reverse
 from blog.models import Post
+from allauth.account.views import SignupView, LoginView
 from .models import Membership, UserMembership, Subscription
 from .forms import UserForm, AvatarChangeForm
 import stripe
 
 
-def register_view(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            registered = True
-
-        return login_user_view(request)
-
-    elif request.method == 'GET':
-        user_form = UserForm()
-        template_name = 'memberships/register.html'
-        return render(request, template_name, {'user_form': user_form})
-
-def login_user_view(request):
-    context = RequestContext(request)
-
-    if request.method == 'POST':
-
-        username=request.POST['username']
-        password=request.POST['password']
-        authenticated_user = authenticate(username=username, password=password)
-
-        if authenticated_user is not None:
-            login(request=request, user=authenticated_user)
-            return HttpResponseRedirect('/courses/')
-
-        else:
-
-            print("Invalid login details: {}, {}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-
-
-    return render(request, 'memberships/login.html', {}, context)
-
 @login_required
 def user_logout_view(request):
     logout(request)
-    return HttpResponseRedirect('memberships/login')
+    return HttpResponseRedirect('/')
 
 
-
+@login_required
 def my_membership_view(request):
     user_membership = get_user_membership(request)
     user_subscription = get_user_subscription(request)
