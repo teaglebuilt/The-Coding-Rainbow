@@ -80,12 +80,13 @@ class PostLikeAPIToggle(APIView):
         # slug = self.kwargs.get('slug')
         obj = get_object_or_404(Post, slug=slug)
         url_ = obj.get_absolute_url()
-        user = obj.author
+        user = get_user_membership(request)
         updated = False
         liked = False
-        if user:
+        if user.user.is_authenticated:
             if user in obj.likes.all():
                 liked = False
+                updated = True
                 obj.likes.remove(user)
             else:
                 liked = True
@@ -133,4 +134,4 @@ def post_update(request, slug):
 def post_delete(request, slug):
     unique_post = get_object_or_404(Post, slug=slug)
     unique_post.delete()
-    return redirect('posts:list')
+    return redirect('post:list')
