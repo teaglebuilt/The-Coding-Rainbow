@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import logout, login, authenticate
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
@@ -11,12 +12,14 @@ from django.views.generic import RedirectView
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
 
-from .models import Post
+from .models import Post, NewsLetterUser
+from memberships.models import UserMembership
 from memberships.views import get_user_membership
-from .forms import PostModelForm
+from .forms import PostModelForm, NewsLetterSignUpForm
 
 
 def posts_list(request):
+    users = UserMembership.objects.exclude(user=request.user)
     queryset_list = Post.objects.all()
     query = request.GET.get('q')
     if query:
@@ -37,6 +40,7 @@ def posts_list(request):
     recent_posts = Post.objects.order_by('-timestamp')[0:3]
 
     context = {
+        'users': users,
         'all_posts': queryset,
         'page_request_var': page_request_var,
         'recent_posts': recent_posts
@@ -134,4 +138,35 @@ def post_update(request, slug):
 def post_delete(request, slug):
     unique_post = get_object_or_404(Post, slug=slug)
     unique_post.delete()
-    return redirect('post:list')
+    return redirect('blog:blog')
+
+
+def newsletter_signup(request):
+    if request.method == 'POST':
+        form = NewsLetterSignUpForm(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            if NewsLetterUser.objects.filter(email=instance.email).exists():
+                messages.warning(request, 'Your email already exists.')
+            else:
+                instance.save()
+    else:
+
+        form = NewsLetterSignUpForm()
+
+        return render(request, 'blog/posts_list.html', {'form': form})
+
+def newsletter_unsubscribe(request):
+    form = NewsLetterSignUpForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        if NewsLetterUser.objects.filter(email=instance.email).exists():
+            NewsLetterUser.objects.filter(email.instance.email).delete()
+        else:
+            print('Sorry, we did not find your email address.')
+
+        context = {
+            'form': form
+        }
+        template = 'blog/unsubscribe.html'
+        return render(request, template, context)

@@ -11,6 +11,12 @@ class CourseListView(ListView):
 class CourseDetailView(DetailView):
     model = Course
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lesson'] = Lesson.objects.all()
+        return context
+
+
 
 class LessonDetailView(View):
  # filter all the courses, and then filter that course's lessons for a specific lesson..yeah wtf

@@ -1,0 +1,120 @@
+
+{% extends 'memberships/base.html' %}
+
+{% block content %}
+
+	<div class="container text-center">
+
+
+
+        <div id="home" class="tab-pane in active">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3 center">
+						{% if not user_membership.avatar %}
+
+						<span class="profile-picture">
+								<img class="editable img-responsive" alt=" Avatar" id="avatar2" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+						</span>
+						{% else %}
+						<span class="profile-picture">
+								<img class="editable img-responsive" alt=" Avatar" id="avatar2" src="{{ user_membership.avatar.url }}">
+							</span>
+						{% endif %}
+
+						<div class="space space-4"></div>
+
+
+                        {% if button_status == 'not_friend' %}
+			                <small>
+                                <a class='btn btn-sm btn-block btn-success' href="/memberships/friend-request/send/{{ u.id }}">
+                                    <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                                      <span class="bigger-110">Add as a friend</span>
+                                </a>
+                            </small>
+		                {% elif button_status == 'friend_request_sent' %}
+			                <small>
+                                <a class="btn btn-sm btn-block btn-warning" href="/memberships/friend-request/cancel/{{ u.id }}">
+                                    <i class="ace-icon fas fa-ban bigger-120"></i>
+                                    <span class="bigger-110">Cancel Request</span>
+                                </a>
+                            </small>
+                        {% endif %}
+
+						<a href="#" class="btn btn-sm btn-block btn-primary">
+							<i class="ace-icon fa fa-envelope-o bigger-110"></i>
+							<span class="bigger-110">Send a message</span>
+						</a>
+					</div><!-- /.col -->
+
+					<div class="col-xs-12 col-sm-9">
+						<h4 class="blue">
+							<span class="middle">{{ user_membership.first_name }} {{ user_membership.last_name }}</span>
+
+							<span class="label label-purple arrowed-in-right">
+								<i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+								online
+							</span>
+						</h4>
+
+						<div class="profile-user-info">
+							<div class="profile-info-row">
+								<div class="profile-info-name"><strong>UserName</strong></div>
+
+								<div class="profile-info-value">
+									<span>{{ u.username }}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><strong>Location</strong> </div>
+
+								<div class="profile-info-value">
+									<i class="fa fa-map-marker light-red bigger-110"></i>
+									<span>{{ user_membership.location }}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><strong>Birth Date</strong></div>
+
+								<div class="profile-info-value">
+									<span>{{ user_membership.birth_date }}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><strong>Joined</strong></div>
+
+								<div class="profile-info-value">
+									<span>{{ user_membership.user_subscription.get_created_date }}</span>
+								</div>
+							</div>
+							{% if user_subscription != None %}
+							<div class="profile-info-row">
+								<div class="profile-info-name"> Membership Type </div>
+
+								<div class="profile-info-value">
+									<span>{{ user_membership.membership.membership_type }}</span>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+
+						<div class="hr hr-8 dotted"></div>
+
+						<div class="profile-user-info">
+
+
+							<div class="profile-info-row">
+									<div class="profile-info-name">
+                                            <i class="fab fa-facebook"></i>
+									</div>
+
+									<div class="profile-info-value">
+
+										<a href="#">Find me on Facebook</a>
+									</div>
+								</div>
+						</div>
+
+{% endblock %}

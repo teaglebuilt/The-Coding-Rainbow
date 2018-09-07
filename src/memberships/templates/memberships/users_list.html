@@ -1,0 +1,15 @@
+
+{% extends 'memberships/base.html' %}
+
+{% block content %}
+<ul>
+
+{% for user in users %}
+  <a href="{{ user.get_absolute_url }}">
+    <li class="user-name">{{ user }}</li>
+ </a>
+{% endfor %}
+
+</ul>
+
+{% endblock%}

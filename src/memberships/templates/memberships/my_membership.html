@@ -23,6 +23,12 @@
 				  Update Profile
 			  </a>
 			</li>
+			<li>
+				<a data-toggle="tab" href="#friends">
+				  <i class="orange ace-icon fa fa-rss bigger-120"></i>
+					Friends
+				</a>
+			</li>
 		</ul>
 
 		<div class="tab-content no-border padding-24">
@@ -42,15 +48,7 @@
 
 						<div class="space space-4"></div>
 
-						<a href="#" class="btn btn-sm btn-block btn-success">
-							<i class="ace-icon fa fa-plus-circle bigger-120"></i>
-							<span class="bigger-110">Add as a friend</span>
-						</a>
 
-						<a href="#" class="btn btn-sm btn-block btn-primary">
-							<i class="ace-icon fa fa-envelope-o bigger-110"></i>
-							<span class="bigger-110">Send a message</span>
-						</a>
 					</div><!-- /.col -->
 
 					<div class="col-xs-12 col-sm-9">
@@ -205,6 +203,7 @@
 					</button>
 				</div>
 			  </div>
+
 			  <div id="update" class="tab-pane">
 				  <div class="row">
 						<div class="col-md-6">
@@ -215,6 +214,36 @@
 							</div>
 				  </div>
 
+			  </div>
+
+			  <div id="friends" class="tab-pane">
+				<div class="row">
+					<div class="col-md-4">
+							<h1>Friends</h1>
+							{% for friend in friends_list %}
+							<a href="{{ friend.user.profile.get_absolute_url }}">{{ friend.user.username }}</a>
+							{% endfor %}
+						<hr>
+					</div>
+					<div class="col-md-4">
+							<h2>Sent Friend requests</h2>
+							<ul>
+							{% for s_request in sent_friend_requests %}
+								<li>{{ s_request.to_user.username }}</li>
+							{% endfor %}
+							</ul>
+							<hr>
+					</div>
+					<div class="col-md-4">
+							<h2>Received Friend requests</h2>
+
+							{% for r_request in rec_friend_requests %}
+								<p><a href="{{ r_request.from_user.profile.get_absolute_url }}">{{ r_request.from_user.username }}</a></p>
+								<small><a class='btn btn-primary' href="/memberships/friend-request/accept/{{ r_request.from_user.id }}">Accept</a></small>
+								<small><a class='btn btn-warning' href="/memberships/friend-request/delete/{{ r_request.from_user.id }}">Ignore</a></small>
+							{% endfor %}
+					</div>
+				</div>
 			  </div>
 			</div>
 

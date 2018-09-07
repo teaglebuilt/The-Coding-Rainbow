@@ -13,7 +13,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     author = models.ForeignKey(UserMembership, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/%Y/%m/$D/', null=True, blank=True)
+    image = models.ImageField(upload_to='post_image', null=True, blank=True)
     likes = models.ManyToManyField(UserMembership, blank=True, related_name='post_likes')
 
 
@@ -60,3 +60,11 @@ def pre_save_post_reciever(sender, instance, *args, **kwargs):
     instance.slug = slug
 
 pre_save.connect(pre_save_post_reciever, sender=Post)
+
+
+class NewsLetterUser(models.Model):
+    email = models.EmailField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

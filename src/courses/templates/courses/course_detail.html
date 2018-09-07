@@ -2,28 +2,58 @@
 {% extends 'courses/base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-            <h1 class="text-center">Course Detail View Page</h1>
-            <hr>
-        <div class="col-sm-4 col-md-4">
-            <h1>{{ object.title }}</h1>
-            <p class="lead">{{ object.description }}</p>
-            </div>
-            <div class="col-sm-6 col-md-6">
-            <table class="table table-bordered">
-             <tbody>
-                {% for lesson in object.lessons %}
-                <tr class="active">
-                  <a href="{{ lesson.get_absolute_url }}">
-                     <h4 class="text-center">{{ lesson.title }}</h4>
-                  </a>
-                </tr>
-                {% endfor %}
-             </tbody>
-        </table>
-
-        </div>
-    </div>
+<!-- <div class="table-title">
+        <h3>Lessons</h3>
 </div>
+<table class="table-fill">
+  <thead>
+        <tr>
+            <th class="text-left">Number</th>
+            <th class="text-left">Lesson</th>
+        </tr>
+  </thead>
+  <tbody class="table-hover">
+    {% for lesson in object.lessons %}
+        <tr>
+            <td class="text-left">{{ lesson.position }}</td>
+            <td class="text-left">
+              <a href="{{ lesson.get_absolute_url }}">
+                 {{ lesson.title }}
+              </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table> -->
+
+
+<!-- <article class="content">
+        <div class="panel">
+                <img class="panel-img" src="{{ lesson.thumbnail }}">
+                <span class="panel-title">
+                 <a href="{{ lesson.get_absolute_url }}">
+                    {{ lesson.title }}
+                 </a>
+                </span>
+                 <br>
+                <span class="panel-subtitle">Description</span>
+        </div>
+</article> -->
+<article class="lesson-content">
+    {% for lesson in object.lessons %}
+
+    <div class="panel">
+    <a href="{{ lesson.get_absolute_url }}">
+        <img class="panel-img" src="{{ lesson.thumbnail.url }}">
+        <span class="panel-title">{{ lesson.title }}</span>
+    </a>
+         <br>
+        <span class="panel-subtitle">Star</span>
+    </div>
+
+    {% endfor %}
+
+</article>
+
 {% endblock content%}

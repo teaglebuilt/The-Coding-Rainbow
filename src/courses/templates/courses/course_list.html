@@ -2,56 +2,78 @@
 
 
 {% block content %}
-{% if not request.user.is_authenticated %}
-<div class="container">
+
+<div class="container course-header">
     <div class="row">
-        <div class="col-sm-6 col-md-6">
-            <h1>Welcome</h1>
+     <div class="how-udemy-works-container">
+         <div class="how-udemy-works carousel-fullscreen-sidebar" data-purpose="how-udemy-works">
+                        <div class="how-udemy-works__col fx-lt">
+                            <span class="how-udemy-works__icon udi udi-signup_temp"></span>
+                            <div class="how-udemy-works__text">
+
+                                <b>Tons of online courses</b>
+
+                                <div class="how-udemy-works__sub-title">
+                                    Explore a variety of fresh topics
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="how-udemy-works__col fx-ct">
+                            <span class="how-udemy-works__icon udi udi-right_talk"></span>
+                            <div class="how-udemy-works__text">
+                                <b>Tons of Help</b>
+                                <div class="how-udemy-works__sub-title">
+                                    Find the right coder for you
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-udemy-works__col fx-rt">
+                            <span class="how-udemy-works__icon udi udi-timeless"></span>
+                            <div class="how-udemy-works__text">
+                                <b>Lifetime access</b>
+                                <div class="how-udemy-works__sub-title">
+                                    Learn on your schedule
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                        </div>
+        <div class="col-md-12">
+                <h1 class="course-title">Courses</h1>
+                <p class="subtitle">
+                    All courses for the Coding Rainbow are listed below.
+                    If you are not approved, you will be redirected to upgrade your membership.
+                    Each course is anywhere between 6 and 12 lessons, take your time and use the Short Stack
+                    for help! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercit
+                    ation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in repre
+                    henderit in voluptate velit esse cillum d
+                    olore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui o
+                    fficia deserunt
+                    mollit anim id est laborum.
+                </p>
         </div>
     </div>
 </div>
-{% else %}
-    <h1 class="page-title">Courses</h1>
-    <p class="sub-title">Here are a list of courses you are eligible to watch based upon your membership</p>
-<div class="container">
-    <ul class="list-group">
-     {% for object in object_list %}
-     <li class="list-group-item">
-      <img class="img-responsive img-rounded" src="{{ object.image.url }}" alt="" height="256px" width="256px" />
-        <h3 class="list-group-item-heading">
-          <a class="course-title" href="{{ object.get_absolute_url }}">
-                {{ object }}
-            </a>
-          <span class="label label-danger pull-right">NEW !</span>
-        </h3>
-        <p class="list-group-item-text lead">
-            {{ object.description }}
-        </p>
-        </li>
-        <hr>
-       {% endfor %}
-    </ul>
-</div>
+<hr>
+        <div class="vault-items-container">
+                {% for object in object_list %}
 
+            <div class="vault-item password-item" tabindex="0">
+                <div class="vault-item-thumbnail">
+                     <img class="course-img img-responsive img-rounded" src="{{ object.image.url }}" alt=""  />
+                    </div>
+                <div class="vault-item-info">
+                    <h3 class="vault-item-name"><a href="{{object.get_absolute_url }}">{{ object }}</a></h3>
 
-{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+     </div>
 
 {% endblock content%}
-
-
-<!-- <div class="row text-center">
-        <div class="list-group">
-            {% for object in object_list %}
-            <button type="button" class="list-group-item">
-                     <h2 class="text-left course-title">
-                                <a href="{{ object.get_absolute_url }}">
-                                    {{ object }}
-                                </a>
-                         <h4 class="text-center course-description">
-                             {{ object.description }}
-                         </h4>
-                    </h2>
-             </button>
-            {% endfor %}
-        </div>
-   </div> -->

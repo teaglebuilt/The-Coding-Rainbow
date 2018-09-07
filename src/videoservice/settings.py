@@ -32,13 +32,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
 
     'django_extensions',
-
     'rest_framework',
+    'crispy_forms',
+    'pagedown',
 
     'memberships',
     'courses',
     'blog',
-    'crispy_forms',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -124,9 +124,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static_root'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    #'/var/www/static/',
+]
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 
 VENV_PATH = os.path.dirname(BASE_DIR)
 
@@ -156,3 +159,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

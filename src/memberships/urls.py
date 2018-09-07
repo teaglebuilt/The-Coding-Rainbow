@@ -1,13 +1,19 @@
 from django.urls import path
+from django.conf.urls import url
 from allauth.account.views import LoginView, SignupView
 from .views import (
 	MembershipSelectView,
 	PaymentView,
 	updateTransactionRecords,
 	my_membership_view,
-	# update_profile_view,
 	cancelSubscription,
 	user_logout_view,
+	users_list,
+	profile_view,
+	accept_friend_request,
+	send_friend_request,
+	delete_friend_request,
+	cancel_friend_request,
 	)
 
 app_name = 'memberships'
@@ -20,6 +26,11 @@ urlpatterns = [
     path('payment/', PaymentView, name='payment'),
     path('update-transactions/<subscription_id>/', updateTransactionRecords, name='update-transactions'),
 	path('my_membership/', my_membership_view, name='my_membership'),
-	# path('update_profile/', update_profile_view, name="update_profile"),
-	path('cancel/', cancelSubscription, name='cancel')
+	path('cancel/', cancelSubscription, name='cancel'),
+	path('memberlist/', users_list, name='memberlist'),
+	url(r'^(?P<slug>[\w-]+)/$', profile_view),
+	url(r'^friend-request/send/(?P<id>[\w-]+)/$', send_friend_request),
+    url(r'^friend-request/cancel/(?P<id>[\w-]+)/$', cancel_friend_request),
+    url(r'^friend-request/accept/(?P<id>[\w-]+)/$', accept_friend_request),
+    url(r'^friend-request/delete/(?P<id>[\w-]+)/$', delete_friend_request),
 ]

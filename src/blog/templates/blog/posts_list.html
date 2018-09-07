@@ -22,60 +22,81 @@
             </div>
 
 {% else %}
-
-<div class="container">
+<a href="/blog/create/" class="gradient-btn create-post-btn" data-title="Create Post"></a>
+<h1 class="title">The Short Stack</h1>
+<div class="container-fluid">
    <div class="row">
-      <a href="/blog/create/" class="gradient-btn create-post-btn" data-title="Create Post"></a>
+
       <div class="page-header">
-          <h1>This blog is for you <small>read, write, and share while you learn.</small></h1>
+
       </div>
    </div>
   <div class="row">
-    <div class="col-md-8">
-        {% for post in all_posts %}
-            <article id="post">
-              <header>
-                <div class="meta">
-                    <h2 class="text-center">{{ post.title }}</h2>
-                    <div class="row inline">
-                        {% if post.image %}
-                        <div class="col-md-2">
+     <aside class="col-md-2 shadow panel panel-primary">
+         <header class="panel-heading">
+             Users
+         </header>
+        <ul class="list-group">
+            {% for user in users %}
+              <a href="{{ user.get_absolute_url }}">
+                <li class="list-group-item">{{ user }}</li>
+              </a>
+              <hr />
+            {% endfor %}
+        </ul>
+     </aside>
 
-                            <img height="100" width="100" class="img-responsive img-circle" src="{{ post.author.avatar.url }}" alt='author-avatar'
-                            />
 
-                        </div>
-                        <div class="col-md-4 post-author">
-                            <strong id="label">Written by:</strong><span class="author">{{ post.author.first_name }}</span>
-                        </div>
-                    </div>
+    <div class="col-md-6">
 
-                  </span> <span class="date"></span>
+{% for post in all_posts %}
+
+<article class="post">
+    <header class="post-header">
+        <div class="meta">
+            <div class="row inline">
+                {% if post.image %}
+                <div class="col-md-2">
+                    <a href="{{ post.author.get_absolute_url }}">
+                        <img height="80" width="80" id="avatar" class="img-responsive img-circle" src="{{ post.author.avatar.url }}" alt='author-avatar'/>
+                    </a>
                 </div>
-              </header>
+                <div class="post-author">
+                    <strong id="label">
+                      <span class="author">{{ post.author.user.username }}</span>
+                    </strong>
+                </div>
+            </div>
+          </div>
+            <span class="date"><strong><em>Created:</em>{{ post.timestamp }}</strong></span>
+        </header>
+        <h2 class="text-center blog-title">{{ post.title }}</h2>
               <div class="entry-content">
 
-                <p class="lead">{{ post.description }}&hellip;</p>
+
+                <p class="content-markdown content-descr">{{ post.description|safe|truncatechars:100 }}&hellip;</p>
                 <a href="{{ post.get_absolute_url }}" class="btn btn-primary pull-right">Read More
                 <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true">
                 </span></a>
 
             {% else %}
-                <p class="lead">{{ post.description|truncatechars:20 }}&hellip;</p>
+                <p class="lead">{{ post.description|safe|truncatechars:100 }}&hellip;</p>
                 <a href="{{ post.get_absolute_url }}" class="btn btn-primary pull-right">Read More <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             {% endif %}
               </div>
               <hr>
-          <footer class="post-footer">
+    <footer class="post-footer">
 
               <a href="{{ post.get_like_url }}" data-likes="{{ post.likes.count }}"
               class="like-btn btn btn-success" data-href="{{ post.get_api_like_url }}">
               Like
                 <span>{{ post.likes.count }}</span>
               </a>
-          </footer>
-            </article>
-    {% endfor %}
+    </footer>
+
+
+</article>
+{% endfor %}
 
     <div class="pagination">
       <span class="step-links">
@@ -97,21 +118,15 @@
     <aside class="col-sm-4 col-md-4 col-lg-4">
 
         <div class="mb-3">
-              <h3 class="card-header mb-3">Join our Newsletter</h3>
-              <form class="form-horizontal">
-                <div class="form-group">
-                  <div class="col-sm-12 col-md-12 col-lg-12">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                  </div>
-                </div>
+            <h3 class="card-header mb-3">Join our Newsletter</h3>
+            <form  method="POST">
+                {% csrf_token %}
+                {{ form }}
 
-                <div class="form-group">
-                  <div class="col-sm-12 col-md-12 col-lg-12">
-                    <button type="submit" class="btn btn-primary">Join Us</button>
-                  </div>
-
-                </div>
-              </form>
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Join</button>
+            </span>
+            </form>
 
         </div>
 
@@ -121,11 +136,13 @@
           <h4 class="list-group-item-heading">
             <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
           </h4>
-          <p class="list-group-item-text">
+          <p class="list-group-item-text content-markdown">
             {{ obj.description|truncatechars:20 }}
           </p>
-          <hr> {% endfor %}
+          <hr>
+          {% endfor %}
         </div>
+
       </div>
 
           </aside>
@@ -135,4 +152,4 @@
 
 {% endif %}
 
-{% endblock content %}
+{% endblock %}

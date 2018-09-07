@@ -1,40 +1,86 @@
+
+{% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{% block head_title %}{% endblock %}</title>
-    {% block extra_head %}
-    {% endblock %}
-  </head>
-  <body>
-    {% block body %}
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <title>
+        {% block head_title %}
+        {% endblock %}
+      </title>
 
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
+      {% block extra_head %}
+      {% endblock %}
+</head>
+<body>
+    {% include 'courses/navbar.html' %}
+    {% include 'courses/messages.html' %}
+
+{% block body %}
+
+
+    {% if not request.user.is_authenticated %}
+    <nav class="breadcrumb">
+            <ol class='breadcrumb'>
+                <li class='pull-left'><a href="{% url 'memberships:signup' %}">Register</a></li>
+                <li class='pull-right'><a href="{% url 'memberships:login' %}">Login</a></li>
+                <li class='pull-right'><a href='/memberships'>Memberships</a></li>
+            </ol>
+     </nav>
+    <div class="container hero">
+     <div class="skew">
+         <div class="content">
+
+         </div>
+     </div>
     </div>
+
+
+     <div class="container">
+            <div class="row">
+
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="container">
+            <ol class='breadcrumb'>
+                <li><a href='/courses'>Courses</a></li>
+                <li><a href='/blog'>Blog</a></li>
+                <li><a href='/memberships/my_membership/'>View Membership Details</a></li>
+                    {% block post_detail_link %}
+                    {% endblock %}
+                <li class='pull-right'><a href="{% url 'memberships:logout' %}">Logout</a></li>
+                <li class='pull-right'><a href='/memberships'>Memberships</a></li>
+            </ol>
+        </div>
     {% endif %}
+    <div class="container-fluid">
+            {% block content%}
 
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
+            {% endblock content%}
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
-  </body>
+{% endblock %}
+
+{% block extra_body %}
+
+{% endblock %}
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<script>
+	$("#relationship").text('');
+</script>
+</body>
 </html>

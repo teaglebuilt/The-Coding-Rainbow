@@ -2,9 +2,62 @@
 
 
 {% block content %}
-<div class="row text-center">
-<h1 id="color">Select a membership</h1>
+
+<hr class="short"/>
+
+<!-- BENEFITS FOR ALL MEMBERHSIP LEVELS -->
+<h2 class="benefits-title" align="center">Benefits for All Membership Levels</h2>
+<div class="container">
+		<div class="row benefits">
+				<div class="six columns benefits-1">
+						 <ul class="benefits-ul-1">
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Personalized membership cards
+								</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Unlimited View Time
+								</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Instant Chat
+								</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Communicate with other Users
+								</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									10 percent discount in our &amp; store
+								</li>
+					 </ul>
+				</div>
+				<div class="six columns benefits-2 omega">
+						<ul class="benefits-ul-2">
+							 <li class="check">
+									<i class="fas fa-check"></i>
+								 <a href="#">
+									 Discounts on global confrences
+									</a> and special events</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Previews of special lessons
+								</li>
+								<li class="check">
+										<i class="fas fa-check"></i>
+									Exclusive e-mail announcements
+								</li>
+							 <li class="check">
+									<i class="fas fa-check"></i>
+							  Free subscription to our member magazine,
+							 <em>Shorelines</em>
+							</li>
+					 </ul>
+				</div>
+		 </div>
 </div>
+
 
 <div class="container">
 	<div class="row">
@@ -29,7 +82,7 @@
 				{% if object.membership_type != current_membership %}
 					<button>Select</button>
 				{% else %}
-					<small>This is your current membership</small>
+					<p class="status">This is your current membership</small>
 				{% endif %}
 				<input type="hidden" name="membership_type" value="{{ object.membership_type }}">
 			</form>

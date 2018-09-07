@@ -2,48 +2,72 @@
 {% load static %}
 
 {% block post_detail_link %}
+
 {% if object is not None %}
 	<li><a href="{{ object.course.get_absolute_url }}">{{ object.course.title }}</a></li>
 	<li>{{ object.title }}</li>
 {% endif %}
+
 {% endblock %}
 
 {% block content %}
 	<div class='container'>
-		<h1>Lesson Detail View</h1>
 		<div class='row'>
-			<div class='col-md-12'>
-				{% if object is not None %}
-				<h3>{{ object.title }}</h3>
-				<p>{{ object.description }}</p>
-				  <div class="player">
-					<video class="player__video viewer"
-							src="{{ object.video_url.url }}"
-							>
-				      Sorry, your browser doesn't support embedded videos.
-					</video>
 
-					<div class="player__controls">
-							<div class="progress">
-							 <div class="progress__filled"></div>
-					</div>
-							<button class="player__button toggle" title="Toggle Play">►</button>
-							<input type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" value="1">
-							<input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
-							<button data-skip="-10" class="player__button">« 10s</button>
-							<button data-skip="25" class="player__button">25s »</button>
-						  </div>
-						</div>
-				</div>
-				{% else %}
+			<h4>Do not rush through the video. Take your time and go through each lesson several times before you move on.
+				Look below for comments or questions, or refer to the Short Stack for further help.
+			</h4>
+
+<main>
+
+  <input id="tab1" type="radio" visibility="hidden" name="tabs" checked>
+  <label for="tab1">
+	  Video
+ </label>
+
+
+  <input id="tab2" type="radio" name="tabs">
+  <label for="tab2">Discussion</label>
+
+  <section id="content1">
+	  <div class="container">
+		 <div class="row">
+		   <div class='col-md-12'>
+
+		{% if object is not None %}
+				 <h3>{{ object.title }}</h3>
+					<p>{{ object.description }}</p>
+
+						<video controls
+									controlsList="nodownload"
+									src="{{ object.video_url.url }}"
+									width="640"
+									height="360">
+									Sorry, your browser doesnt support embedded
+									video. You suck!
+				</video>
+			 </div>
+		  </div>
+	  </div>
+
+	  {% else %}
 				<h3>Upgrade membership</h3>
 				<p>To view this course you'll need to upgrade your membership</p>
 				<br>
 				<a href="{% url 'memberships:select' %}"><button class="btn btn-warning">Check out memberships</button></a>
 				<hr>
-				{% endif %}
-			</div>
+	 {% endif %}
+  </section>
+
+  <section id="content2">
+		<div class="col-md-10 col-sm-offset-2">
+			<div class="fb-comments" data-href="{{ request.build_absolute.uri }}" data-numposts="5"></div>
 		</div>
-	</div>
+  </section>
+
+
+
+
+</main>
 <script src="{% static 'js/video.js' %}"></script>
 {% endblock content %}

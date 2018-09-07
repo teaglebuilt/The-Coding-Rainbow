@@ -33,6 +33,7 @@ class Membership(models.Model):
 
 class UserMembership(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	slug = models.SlugField()
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
 	first_name = models.CharField(max_length=20)
@@ -40,28 +41,31 @@ class UserMembership(models.Model):
 	bio = models.TextField(max_length=500, blank=True)
 	location = models.CharField(max_length=30, blank=True)
 	birth_date = models.DateField(null=True, blank=True)
-	avatar = models.ImageField(upload_to='media_root', blank=True)
+	avatar = models.ImageField(upload_to='avatar', blank=True)
+	friends = models.ManyToManyField("UserMembership", blank=True)
 
 
 	def __str__(self):
 		return self.user.username
 
+	def get_absolute_url(self):
+		return "/memberships/{}".format(self.slug)
+
 
 def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
-    if created:
-        UserMembership.objects.get_or_create(user=instance)
+	if created:
+		UserMembership.objects.get_or_create(user=instance)
 
-    user_membership, created = UserMembership.objects.get_or_create(
-        user=instance)
-    free_membership = Membership.objects.filter(
-        membership_type='Free').first()  # get the free membership instance
-    if user_membership.stripe_customer_id is None or user_membership.stripe_customer_id == '':
-        new_customer_id = stripe.Customer.create(email=instance.email)
-        user_membership.stripe_customer_id = new_customer_id['id']
-        # assign the membership of the user to the free membership on signup
-        user_membership.membership = free_membership
-        user_membership.save()
-
+	user_membership, created = UserMembership.objects.get_or_create(
+		user=instance)
+	free_membership = Membership.objects.filter(
+		membership_type='Free').first()  # get the free membership instance
+	if user_membership.stripe_customer_id is None or user_membership.stripe_customer_id == '':
+		new_customer_id = stripe.Customer.create(email=instance.email)
+		user_membership.stripe_customer_id = new_customer_id['id']
+		# assign the membership of the user to the free membership on signup
+		user_membership.membership = free_membership
+		user_membership.save()
 
 post_save.connect(post_save_usermembership_create,
                   sender=settings.AUTH_USER_MODEL)
@@ -87,3 +91,12 @@ class Subscription(models.Model):
 
 	class Meta:
 		db_table = 'Subscription'
+
+
+class FriendRequest(models.Model):
+	to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+	from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+	timestamp = models.DateTimeField(auto_now_add=True) # set when created
+
+	def __str__(self):
+		return "From {}, to {}".format(self.from_user.username, self.to_user.username)

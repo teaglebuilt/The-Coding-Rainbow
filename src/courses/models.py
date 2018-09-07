@@ -14,7 +14,7 @@ class Course(models.Model):
     slug = models.SlugField()
     title = models.CharField(max_length=120)
     description = models.TextField()
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to="course_img", null=True, blank=True)
     allowed_membership = models.ManyToManyField(Membership)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     position = models.IntegerField()
     video_url = models.FileField(upload_to='videos/%Y/%m/$D/', null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='images/%Y/%m/$D/', null=True, blank=True)
+    thumbnail = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.title

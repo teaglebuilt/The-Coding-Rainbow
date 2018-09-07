@@ -1,19 +1,21 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.views.generic import ListView
 from django.urls import reverse
 from blog.models import Post
 from allauth.account.views import SignupView, LoginView
-from .models import Membership, UserMembership, Subscription
+from .models import Membership, UserMembership, Subscription, FriendRequest
 from .forms import UserForm, AvatarChangeForm
 import stripe
 
+User = get_user_model()
 
 @login_required
 def user_logout_view(request):
@@ -27,6 +29,12 @@ def my_membership_view(request):
     user_subscription = get_user_subscription(request)
     user_posts = Post.objects.filter(author=user_membership)
 
+    p = UserMembership.objects.filter(user=request.user).first()
+    sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
+    rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
+
+
+
     avatar_form = AvatarChangeForm()
     if request.method == "POST":
         avatar_form = AvatarChangeForm(request.POST, request.FILES)
@@ -39,6 +47,8 @@ def my_membership_view(request):
             user_membership.save()
     context = {
 		'user_membership': user_membership,
+        'sent_friend_requests': sent_friend_requests,
+        'rec_friend_requests': rec_friend_requests,
         'user_subscription': user_subscription,
         'posts': user_posts,
         'avatar_form': avatar_form
@@ -188,3 +198,78 @@ def cancelSubscription(request):
     # sending an email here
 
     return redirect('/memberships')
+
+
+def users_list(request):
+    users = UserMembership.objects.exclude(user=request.user)
+    context = { 'users': users }
+    return render(request, 'memberships/users_list.html', context)
+
+
+def send_friend_request(request, id):
+	if request.user.is_authenticated:
+		user = get_object_or_404(User, id=id)
+		frequest, created = FriendRequest.objects.get_or_create(
+			from_user=request.user,
+			to_user=user)
+		return HttpResponseRedirect('/memberships')
+
+def cancel_friend_request(request, id):
+	if request.user.is_authenticated:
+		user = get_object_or_404(User, id=id)
+		frequest = FriendRequest.objects.filter(
+			from_user=request.user,
+			to_user=user).first()
+		frequest.delete()
+		return HttpResponseRedirect('/memberships/my_membership')
+
+def accept_friend_request(request, id):
+	from_user = get_object_or_404(User, id=id)
+	frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
+	user1 = frequest.to_user
+	user2 = from_user
+	user1.profile.friends.add(user2.profile)
+	user2.profile.friends.add(user1.profile)
+	frequest.delete()
+	return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+
+
+def delete_friend_request(request, id):
+	from_user = get_object_or_404(User, id=id)
+	frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
+	frequest.delete()
+	return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+
+
+def profile_view(request, slug):
+    p = UserMembership.objects.filter(slug=slug).first()
+    u = p.user
+    user_membership = UserMembership.objects.filter(slug=slug).first()
+    sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
+    rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
+
+    friends = p.friends.all()
+
+    # is this user our friend?
+    button_status = 'none'
+    if p not in friends.all():
+        button_status = 'not_friend'
+
+        # if we have sent him a friend request
+        if len(FriendRequest.objects.filter(
+            from_user=request.user).filter(to_user=p.user)) == 1:
+                button_status = 'friend_request_sent'
+
+    context = {
+        'user_membership': user_membership,
+        'u': u,
+        'button_status': button_status,
+        'friends': friends,
+        'sent_friends_requests': sent_friend_requests,
+        'rec_friend_requests': rec_friend_requests
+    }
+
+    return render(request, "memberships/profile_view.html", context)
+
+
+

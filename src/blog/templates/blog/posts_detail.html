@@ -34,9 +34,9 @@
    <div class="row">
      <div class="col-md-2"></div>
        <div class="col-md-8">
-            <p class="text-center detail-descr">
+            <p class="text-center content-markdown detail-descr">
              <strong>
-                 {{ instance.description}}
+                 {{ instance.description|safe }}
              </strong>
             </p>
        </div>
@@ -45,7 +45,7 @@
 {% else %}
    <div class="row">
         <div class="col-md-12">
-             <p class="text-center">{{ instance.description}}</p>
+             <p class="text-center content-markdown">{{ instance.description }}</p>
         </div>
     </div>
 {% endif %}
