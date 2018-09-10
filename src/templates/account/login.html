@@ -12,11 +12,15 @@
 {% get_providers as socialaccount_providers %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4"></div>
-
+    <div class="col-md-4">
+    <div class="wrap">
+            <h1>Login</h1>
+          </div>
+    </div>
+    <div class="col-md-2"></div>
     <div class="col-md-4">
       <div class="login-container">
-        <img class="auth_logo" src="/media/CodingRainbow.png" alt="logo">
+
           <form class="login" method="POST" action="{% url 'account_login' %}">
               {% csrf_token %}
               {{ form|crispy }}
@@ -36,7 +40,7 @@
 
             {% include "socialaccount/snippets/login_extra.html" %}
           </div>
-          <div class="col-md-4"></div>
+
       </div>
   </div>
 </div>

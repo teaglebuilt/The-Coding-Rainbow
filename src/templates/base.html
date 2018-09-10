@@ -7,6 +7,8 @@
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c|Varela+Round" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <title>
@@ -32,23 +34,119 @@
                 <li class='pull-right'><a href='/memberships'>Memberships</a></li>
             </ol>
      </nav>
-    <div class="container hero">
-     <div class="skew">
-         <div class="content">
-
-         </div>
-     </div>
-    </div>
 
 
-     <div class="container">
-            <div class="row">
 
+     {% block landing %}
+    <div class='allMac'>
+            <div class='screen'>
+              <div class='browser'>
+                <div class='toolbar'>
+                  <div class='buttons'>
+                    <img class="intro-logo" src="https://s15.postimg.cc/dgcqp5jln/spectrum.png">
+                    <div class='btn'>
+
+                    </div>
+                    <div class='btn'></div>
+                    <div class='btn'></div>
+                  </div>
+                  <div class='urlbar'>
+                    <span>
+                      helloworld.com
+                    </span>
+                  </div>
+                </div>
+                <div class='window'>
+                  <div class='heading'>
+                    <h2 class="screen-title">
+                      Welcome to The Spectrum
+                      <br>
+                      <small>
+                        By: <strong>Dillan Teagle</strong>
+                      </small>
+                      <br>
+                      <small>
+
+                      </small>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div class='dock'>
+                <div class='dock-items'>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/backpack.png'>
+                    <!-- <span>
+
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/book.png'>
+                    <!-- <span>
+                      book
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/briefcase.png'>
+                    <!-- <span>
+                      briefcase
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/browser.png'>
+                    <!-- <span>
+                      browser
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/chalk.png'>
+                    <!-- <span>
+                      chalk
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/direction.png'>
+                    <!-- <span>
+                      direction
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/ghost.png'>
+                    <!-- <span>
+                      ghost
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/map.png'>
+                    <!-- <span>
+                      map
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/padlock.png'>
+                    <!-- <span>
+                      padlock
+                    </span> -->
+                  </div>
+                  <div class='dock-item'>
+                    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/379903/meter.png'>
+                    <!-- <span>
+                      meter
+                    </span> -->
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-
+            <div class='outerscreen'></div>
+            <div class='clutch'></div>
+        <div class='mac-base2'></div>
+      <div class='mac-base'></div>
     </div>
+  {% endblock %}
+
     {% else %}
+
+
     <div class="container">
             <ol class='breadcrumb'>
                 <li><a href='/courses'>Courses</a></li>
@@ -62,7 +160,7 @@
         </div>
     {% endif %}
     <div class="container-fluid">
-            {% block content%}
+            {% block content %}
 
             {% endblock content%}
     </div>

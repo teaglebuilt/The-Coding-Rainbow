@@ -85,6 +85,10 @@ html {
 .nav-name a {
     text-decoration: none;
 }
+.nav-icon {
+  color: white;
+  padding-top: 25px;
+}
 
 .nav-user {
     color: white;
@@ -120,21 +124,6 @@ html {
      }
 
 /* TOP NAV*/
-
-/* LOGIN */
-.login-container {
-    margin-top: 60px;
-    padding: 60px;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-}
-
-
-.login-btn {
-    margin-left: 20px;
-}
-.login-social {
-    padding-top: 40px;
-}
 
 /* Course List */
 .page-title {
@@ -214,90 +203,6 @@ ul li img {
      margin-left:auto;
      margin-right:auto;
    }
-
-
-/* Post_LIST */
-.post {
-    margin-top: 40px;
-    background: #f7f7f7;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.post:hover {
- box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
-}
-.create-post-btn {
-    float: right;
-}
-
-.shadow {
-    box-shadow: 0px 0px 5px 0px;
-    padding-top: 10px;
-}
-.sidebar {
-    overflow: scroll;
-    transition: all .3s ease-out;
-    width: 180px;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-overflow-scrolling: touch;
-}
-.user-div-title {
-    background: #758ef3;
-    border-radius: 10px;
-    font-family: 'Varela Round', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.user-name {
-    list-style: none;
-    font-family: 'Roboto', sans-serif;
-    color: black;
-}
-
-.blog-title {
-    font-family: 'Varela Round', sans-serif;
-}
-
-.post-author {
-    margin-top: 20px;
-}
-#avatar {
-    border: 1px solid white;
-}
-.post-header {
-    background: lightsteelblue;
-    border-radius: 10px;
-    border: 1px solid #1f3356;
-    padding: 10px;
-}
-.date {
-    padding: 15px;
-    font-family: 'Roboto', sans-serif;
-    float: right;
-    color: #a04831
-}
-em {
-    padding-right: 10px;
-}
-#label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-}
-.author {
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-size: 24px;
-    color: #1f3356;
-}
-.content-descr {
-    font-family: 'roboto', sans-serif;
-}
 
 /* Lesson Detail */
 

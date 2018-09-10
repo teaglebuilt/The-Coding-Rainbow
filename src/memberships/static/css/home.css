@@ -1,11 +1,12 @@
 .intro-logo {
-    height: 150px;
-    width: 150px;
+    height: 15px;
+    width: 15px;
 }
+
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
-html,
+/* html,
 body {
   -moz-box-sizing: border-box;
        box-sizing: border-box;
@@ -14,7 +15,7 @@ body {
   background: #FFF;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-}
+} */
 
 .hero {
   width: 100%;
@@ -24,16 +25,22 @@ body {
   color: #fff;
   background: #3999dc;
 }
-
-.skew {
-  margin-top: 450px;
-  padding: 200px 0;
-  transform: skew(0deg, 10deg);
-  background: #fff
+.hero-logo {
+  margin-top: 100px;
+  margin-left: 300px;
+  width: 350px;
+  height: 350px;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.8, transparent), to(white));
 }
+.hero-text {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 80px;
+  margin-top: 200px;
+
+}
+
 .content {
   text-align: center;
-  transform: skew(0deg, 10deg);
 }
 
 .wrapper {
@@ -75,51 +82,392 @@ h1.heading {
     margin: 0 0 0.3em;
   }
 }
-.card {
+.cards-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Open Sans;
+}
+.card-container{
+  perspective: 900px;
+  margin-right: 20px;
+}
+
+.card{
+  position: relative;
+  width: 250px;
+  height: 250px;
+  transition: all 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.front,.back{
+  position: absolute;
+  background: #1f3356;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 5px;
+  color: white;
+  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+  backface-visibility: hidden;
+}
+
+.front{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.back{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  font-family: 'Varela Round', sans-serif;
+}
+.back a {
+  color: white;
+}
+.back a:hover {
+  color: white;
+}
+.card-container:hover .card{
+  transform: rotateY(180deg);
+}
+
+.back{
+  transform: rotateY(180deg);
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  background: #1e90ff;
+}
+
+span {
+  font-family: "Open Sans", sans-serif;
+}
+
+.allMac {
   display: block;
-    margin-bottom: 20px;
-    line-height: 1.42857143;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-    transition: box-shadow .25s;
+  width: 360px;
+  height: 100%;
+  margin: 30px auto;
+  transform: scale(2);
 }
-.card:hover {
-  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+.allMac .macbook {
+  width: 400px;
+  margin: 0 auto;
+  max-height: 380px;
 }
-.img-card {
+.allMac .mac-base {
+  background-color: #ababab;
+  width: 380px;
+  height: 16px;
+  border-radius: 10px;
+  margin-top: 192px;
+  position: absolute;
+  display: block;
+  z-index: -1;
+}
+.allMac .mac-base2 {
+  background-color: #d8d8d8;
+  height: 12px;
+  width: 380px;
+  margin-top: 190px;
+  z-index: 2;
+  position: absolute;
+}
+.allMac .clutch {
+  background-color: #828181;
+  height: 12px;
+  width: 60px;
+  margin-left: 150px;
+  margin-top: 185px;
+  position: absolute;
+  border-radius: 5px;
+  z-index: 3;
+}
+.allMac .outerscreen {
+  border-radius: 10px;
+  border-top: 185px solid #333333;
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
+  height: 30px;
+  width: 285px;
+  position: absolute;
+  margin-left: 42.75px;
+  margin-top: 5px;
+  overflow: hidden;
+  z-index: 4;
+}
+.allMac .screen {
+  height: 160px;
+  background-color: #3d85cc;
+  width: 260px;
+  position: absolute;
+  margin-left: 55.5px;
+  margin-top: 21px;
+  z-index: 5;
+}
+.allMac .screen .browser {
+  position: relative;
+  top: 5%;
+  width: 95%;
+  height: 80%;
+  margin: auto;
+  transition: all 0.1s linear;
+}
+.allMac .screen .browser:hover {
+  transform: scale(0.95) translateY(0px);
+}
+.allMac .screen .browser .toolbar {
+  position: relative;
   width: 100%;
-  height:200px;
-  border-top-left-radius:2px;
-  border-top-right-radius:2px;
-  display:block;
-    overflow: hidden;
+  height: 11px;
+  background: #eee;
+  border-radius: 1px 1px 0 0;
 }
-.img-card img{
+.allMac .screen .browser .toolbar .buttons {
+  position: relative;
+  width: 10%;
+  height: 100%;
+  left: 2%;
+}
+.allMac .screen .browser .toolbar .buttons .btn:nth-child(1) {
+  float: left;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ff5d56;
+  margin: 4px 2px;
+}
+.allMac .screen .browser .toolbar .buttons .btn:nth-child(2) {
+  float: left;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffbd35;
+  margin: 4px 2px;
+}
+.allMac .screen .browser .toolbar .buttons .btn:nth-child(3) {
+  float: left;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #00cd4a;
+  margin: 4px 2px;
+}
+.allMac .screen .browser .toolbar .urlbar {
+  position: relative;
+  float: left;
+  padding-left: 3px;
+  width: 85%;
+  height: 5px;
+  left: 12%;
+  top: -8px;
+  background: white;
+}
+.allMac .screen .browser .toolbar .urlbar span {
+  display: inline;
+  float: left;
+  font-family: "Open Sans", sans-serif;
+  font-size: 4px;
+}
+.allMac .screen .browser .window {
+  position: relative;
   width: 100%;
-  height: 200px;
-  object-fit:cover;
-  transition: all .25s ease;
+  top: -12px;
+  height: calc(100% - 10px);
+  background: white;
+  text-align: cente;
 }
-.card-content {
-  padding:15px;
-  text-align:left;
+.allMac .screen .browser .window .heading {
+  width: 50%;
+  position: relative;
+  margin: 0px auto;
+  top: 10px;
+  z-index: 10000;
+  text-align: center;
 }
-.card-title {
-  margin-top:0px;
-  font-weight: 700;
-  font-size: 1.65em;
+.allMac .screen .browser .window .heading h2 {
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+  font-size: 15px;
 }
-.card-title a {
-  color: #000;
-  text-decoration: none !important;
+.allMac .screen .browser .window .heading h2 small {
+  font-size: 6px;
 }
-.card-read-more {
-  border-top: 1px solid #D4D4D4;
+.allMac .screen .browser .window .heading h2 small:nth-child(2) {
+  font-size: 7px;
 }
-.card-read-more a {
-  text-decoration: none !important;
-  padding:10px;
-  font-weight:600;
-  text-transform: uppercase
+.allMac .screen .dock {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  height: 15px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px 2px 0 0;
+  transition: all 0.15s ease-in;
 }
+.allMac .screen .dock:hover {
+  width: 95%;
+  left: 2.5%;
+}
+.allMac .screen .dock .dock-items {
+  position: relative;
+  width: 100%;
+  margin-left: 8.5%;
+  left: 0;
+  transition: all 0.1s linear;
+}
+.allMac .screen .dock .dock-items:hover {
+  left: -5px;
+}
+.allMac .screen .dock .dock-items .dock-item {
+  position: relative;
+  display: blocl;
+  float: left;
+  width: 9.5%;
+  height: 100%;
+  text-align: center;
+  transition: all 0.1s linear;
+  cursor: pointer;
+}
+.allMac .screen .dock .dock-items .dock-item span {
+  display: block;
+  position: absolute;
+  top: -15px;
+  width: 100%;
+  font-size: 4px;
+  font-family: "Open Sans", sans-serif;
+  padding: 1px;
+  background: rgba(204, 204, 204, 0.6);
+  visibility: hidden;
+  text-transform: capitalize;
+  text-align: center;
+  border-radius: 1px;
+}
+.allMac .screen .dock .dock-items .dock-item span:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-top: 2px solid rgba(204, 204, 204, 0.6);
+  left: 11px;
+  top: 7px;
+}
+.allMac .screen .dock .dock-items .dock-item img {
+  width: 60%;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(1) {
+  left: 0px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(1):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(1):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(2) {
+  left: -3px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(2):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(2):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(3) {
+  left: -6px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(3):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(3):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(4) {
+  left: -9px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(4):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(4):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(5) {
+  left: -12px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(5):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(5):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(6) {
+  left: -15px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(6):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(6):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(7) {
+  left: -18px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(7):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(7):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(8) {
+  left: -21px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(8):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(8):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(9) {
+  left: -24px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(9):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(9):hover span {
+  visibility: visible;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(10) {
+  left: -27px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(10):hover {
+  transform: scale(1.2) translateY(-3px);
+  margin: 0 5px;
+}
+.allMac .screen .dock .dock-items .dock-item:nth-child(10):hover span {
+  visibility: visible;
+}
+

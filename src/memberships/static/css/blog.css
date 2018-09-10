@@ -1,0 +1,214 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #efefef;
+  }
+
+  .short-stack {
+    position: relative;
+    width: 500px;
+    margin-right: 50px auto;
+    text-transform: uppercase;
+  }
+
+  .ss-title {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0 20px;
+    background: #fff;
+    font-size:25px;
+    color: #4D4F53;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,.5);
+    transform: skewY(-3deg);
+    z-index: 2;
+  }
+   .ss-subtitle {
+    display: inline-block;
+    position: relative;
+    top: -10px;
+    left: 70px;
+    margin: 0;
+    padding: 5px 20px;
+    background: #0096d6;
+    color: #fff;
+    font-size: 50px;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0,.5);
+    transform: skewY(-3deg);
+  }
+
+.box {
+    position: relative;
+    margin: 40px auto;
+    width: 600px;
+    height: 350px;
+    background: #fff;
+  }
+
+
+.box::before,
+.box::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  width: 40%;
+  height: 10px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.7);
+  z-index: -1;
+  transition: all .3s ease-in-out;
+}
+
+.box::before {
+  left: 15px;
+  -webkit-transform: skew(-5deg) rotate(-5deg);
+          transform: skew(-5deg) rotate(-5deg);
+}
+
+.box::after {
+  right: 15px;
+  -webkit-transform: skew(5deg) rotate(5deg);
+          transform: skew(5deg) rotate(5deg);
+}
+
+.box:hover::before,
+.box:hover::after {
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.box:hover::before {
+  left: 5px;
+}
+
+.box:hover::after {
+  right: 5px;
+}
+
+.post {
+    margin-top: 40px;
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.post:hover {
+ box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+.create-post-btn {
+    float: right;
+}
+
+
+.blog-title {
+    font-family: 'Varela Round', sans-serif;
+}
+
+.post-author {
+    margin-top: 20px;
+}
+#avatar {
+    border: 1px solid white;
+}
+.post-header {
+    background-color: #3f51b5;
+}
+.date {
+    font-family: 'Roboto', sans-serif;
+    float: right;
+    color: #AEDC6F;
+}
+em {
+    padding-right: 10px;
+}
+#label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+.author {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    color: #fff;
+}
+.content-descr {
+    font-family: 'roboto', sans-serif;
+}
+
+.post-footer {
+ position: absolute;
+ bottom: 0;
+}
+
+.like-btn {
+    position: absolute;
+    bottom: 0;
+}
+
+.post-btn {
+    margin-left: 450px;
+    display: inline-block;
+    position: relative;
+    width: 120px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    font-size: 1em;
+    background-color: #0f9d58;
+    color: #fff;
+    padding-left: 20px;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    font-family: 'roboto', sans-serif;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+
+
+.blog-users {
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    max-width: 200px;
+    height: 667px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.blog-users header {
+    position: relative;
+    background-color: #3f51b5;
+    height: 72px;
+    line-height: 72px;
+    color: #fff;
+    padding-left: 24px;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.item {
+    height: 56px;
+    border-bottom: 1px solid #ececec;
+    text-align: left;
+    padding-left: 16px;
+}
+
+.item label a img {
+    float: left;
+    display: inline-block;
+    background-color: #ccc;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 10px;
+    transition: background .5s;
+}
+
+.item span {
+   font-family: 'Varela Round', sans-serif;
+   font-size: 24px;
+   padding: 10px;
+}
+
+

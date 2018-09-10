@@ -15,6 +15,7 @@ from .models import Membership, UserMembership, Subscription, FriendRequest
 from .forms import UserForm, AvatarChangeForm
 import stripe
 
+
 User = get_user_model()
 
 @login_required
@@ -212,7 +213,7 @@ def send_friend_request(request, id):
 		frequest, created = FriendRequest.objects.get_or_create(
 			from_user=request.user,
 			to_user=user)
-		return HttpResponseRedirect('/memberships')
+		return HttpResponseRedirect('/memberships/admin')
 
 def cancel_friend_request(request, id):
 	if request.user.is_authenticated:
@@ -221,17 +222,18 @@ def cancel_friend_request(request, id):
 			from_user=request.user,
 			to_user=user).first()
 		frequest.delete()
-		return HttpResponseRedirect('/memberships/my_membership')
+		return HttpResponseRedirect('/memberships/admin')
 
 def accept_friend_request(request, id):
-	from_user = get_object_or_404(User, id=id)
-	frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
-	user1 = frequest.to_user
-	user2 = from_user
-	user1.profile.friends.add(user2.profile)
-	user2.profile.friends.add(user1.profile)
-	frequest.delete()
-	return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+    from_user = get_object_or_404(User, id=id)
+    frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
+    user1 = frequest.to_user
+    print("USER ONE HERE", user1)
+    user2 = from_user
+    user1.friends.add(user2)
+    user2.friends.add(user1)
+    frequest.delete()
+    return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
 
 
 def delete_friend_request(request, id):
