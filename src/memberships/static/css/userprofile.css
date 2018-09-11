@@ -171,21 +171,21 @@ html {
 .profile-info-row:first-child .profile-info-name,
 .profile-info-row:first-child .profile-info-value {
     border-top: none
+
 }
 
 .profile-user-info-striped {
-    border: 1px solid #DCEBF7
+    border: 1px solid black;
 }
 
 .profile-user-info-striped .profile-info-name {
     color: #336199;
     background-color: #EDF3F4;
-    border-top: 1px solid #F7FBFF
+    border-top: 1px solid black;
 }
 
 .profile-user-info-striped .profile-info-value {
-    border-top: 1px dotted #DCEBF7;
-    padding-left: 12px
+    border-top: 1px solid black;
 }
 
 .profile-picture {
@@ -1478,4 +1478,34 @@ html {
 
 .grey {
     color: #777!important
+}
+
+.user-profile-name {
+    font-size: 36px;
+}
+
+.friend-box {
+    width: 30%;
+    margin: 20px;
+    min-height: 400px;
+    border: 1px solid #667E99;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+}
+.friend-box h1 {
+    background: #1f3356;
+    border-radius: 10px;
+    color: white;
+    font-size: 32px;
+    padding: 20px;
+}
+
+.friend-img {
+    width: 50px;
+    border-radius: 50px;
+}
+
+.friend-text {
+    font-size: 24px;
+    margin-left: 40px;
 }

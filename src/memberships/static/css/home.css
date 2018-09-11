@@ -83,7 +83,6 @@ h1.heading {
   }
 }
 .cards-container {
-  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -103,7 +102,7 @@ h1.heading {
   transform-style: preserve-3d;
 }
 
-.front,.back{
+.front {
   position: absolute;
   background: #1f3356;
   top: 0;
@@ -123,26 +122,7 @@ h1.heading {
   font-size: 30px;
 }
 
-.back{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 80px;
-  font-family: 'Varela Round', sans-serif;
-}
-.back a {
-  color: white;
-}
-.back a:hover {
-  color: white;
-}
-.card-container:hover .card{
-  transform: rotateY(180deg);
-}
 
-.back{
-  transform: rotateY(180deg);
-}
 
 body,
 html {
@@ -153,6 +133,7 @@ html {
 
 span {
   font-family: "Open Sans", sans-serif;
+  color: white;
 }
 
 .allMac {

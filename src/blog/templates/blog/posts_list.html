@@ -22,11 +22,12 @@
     </div>
 
     {% else %}
-    <a href="/blog/create/" class="gradient-btn create-post-btn" data-title="Create Post"></a>
+
     <div class="short-stack">
         <h1 class="ss-title">Spectrum Presents</h1>
         <h2 class="ss-subtitle">The Short Stack</h2>
     </div>
+
     <div class="container-fluid">
       <div class="row">
 
@@ -34,25 +35,32 @@
 
         </div>
       </div>
+      <a href="/blog/create/" class="gradient-btn" data-title="Create Post"></a>
       <div class="row">
-        <aside class="col-md-2">
+        <aside class="col-md-3">
           <div class="blog-users">
+
             <header>
               Users
             </header>
-
-
+            <form action="/blog/" class="cont">
+                <input type="text" class="srchFld" name="q" value="{{ request.GET.q }}" placeholder="" ng-model="search"/>
+                <button type="submit" class="srchBtn">Search</button>
+                <div class="entypo-search ico"></div>
+              </form>
             {% for user in users %}
-            <div class="item">
-              <label for="">
-                <a href="{{ user.get_absolute_url }}">
-                  <img src="{{ user.avatar.url }}">
-                </a>
-              </label>
-              <span class="username">
-                {{ user }}
+            <div class="wrapr row">
+             <a href="{{ user.get_absolute_url }}">
+              <span class="imgWrpr">
+                {% if user.avatar %}
+                <img class="user-avatar" src="{{ user.avatar.url }}">
+                {% else %}
+                <img class="user-avatar" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+                {% endif %}
               </span>
+              <span class="contactInfo">{{ user }}</span>
             </div>
+          </a>
 
             {% endfor %}
 
@@ -111,7 +119,12 @@
               <header class="post-header">
                 <div class="meta">
                   <div class="row inline">
-
+                      <div class="col-md-2">
+                          <a href="{{ post.author.get_absolute_url }}">
+                            <img height="80" width="80" id="avatar" class="img-responsive img-circle" src="{{ post.author.avatar.url }}"
+                              alt='author-avatar' />
+                          </a>
+                        </div>
                     <div class="post-author">
                       <strong id="label">
                         <span class="author">{{ post.author.user.username }}</span>
@@ -161,44 +174,31 @@
           </div>
 
         </div>
-        <aside class="col-sm-4 col-md-4 col-lg-4">
-          <div class="newsletter-card mb-3">
-            <h3 class="card-header mb-3">Join our Newsletter</h3>
-            <form class="form-horizontal">
-              <div class="form-group">
-                <div class="col-sm-12">
-                  {% csrf_token %}
-                  {{ form }}
-                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <button type="submit" class="btn btn-primary">Join Us</button>
-                </div>
-
-              </div>
-            </form>
-
-          </div>
-
-          <h3>Recent Posts</h3>
-          <div>
-            {% for obj in recent_posts %}
-            <h4 class="list-group-item-heading">
-              <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
-            </h4>
-            <p class="list-group-item-text content-markdown">
-              {{ obj.description|truncatechars:20 }}
-            </p>
-            <hr>
-            {% endfor %}
-          </div>
-
+        <aside class="col-sm-2 col-md-2 col-lg-2">
+          <div class="mb-3">
+                      <div class="sidebar widget">
+                          <h3>Recent Post</h3>
+                          <ul>
+                          {% for obj in recent_posts %}
+                            <li>
+                                <div class="sidebar-thumb">
+                                    <img class="animated rollIn" src="{{ obj.author.avatar.url }}" alt="" />
+                                </div><!-- .Sidebar-thumb -->
+                                <div class="sidebar-content">
+                                    <h5 class="animated bounceInRight"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h5>
+                                </div><!-- .Sidebar-thumb -->
+                                <div class="sidebar-meta">
+                                    <span class="time" ><i class="fa fa-clock-o"></i> Aug 27, 2015</span>
+                                    <span class="comment"><i class="fa fa-comment"></i> 10 comments</span>
+                                </div><!-- .Sidebar-meta ends here -->
+                            </li><!-- .Li ends here -->
+                            {% endfor %}
+                          </ul><!-- .Ul ends here -->
+                      </div><!-- .Widget ends here -->
       </div>
-
       </aside>
+
+
     </div>
   </div>
 

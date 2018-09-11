@@ -3,7 +3,7 @@
 
 
 {% block content %}
-{% if user.is_authenticated %}
+
 <div class="well well-lg detail-well">
 <div class="row">
     <div class="col-sm-12">
@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-4">
        <small>Created:{{ instance.timestamp}}</small>
-       <small>Written By:{{ instance.user.get_full_name }}</small>
+       <small>Written By:{{ instance.author.first_name }}</small>
        <small>Updated On:{{ instance.updated }}</small>
     </div>
     <div class="col-md-4">
@@ -49,6 +49,8 @@
         </div>
     </div>
 {% endif %}
+
+
 <div class="row">
     <div class="col-md-10 col-sm-offset-2">
         <div class="fb-comments" data-href="{{ request.build_absolute.uri }}" data-numposts="5"></div>
@@ -57,22 +59,19 @@
 
 <div class="row detail-btns">
 
-
- <div class="col-md-12">
-    <a href="{{ instance.get_like_url }}" data-likes="{{ instance.likes.count }}"
-     class="like-btn btn btn-success" data-href="{{ instance.get_api_like_url }}">
+    <div class="col-md-12">
+        <a href="{{ instance.get_like_url }}" data-likes="{{ instance.likes.count }}"
+        class="like-detail-btn btn btn-success" data-href="{{ instance.get_api_like_url }}">
         Like
         <span>{{ instance.likes.count }}</span>
     </a>
-    <button class="btn btn-default btn-primary"><a href="{{ instance.get_update_url }}">Update</a></button>
-    <button class="btn btn-default btn-danger"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+    {% if user.id == instance.author.id %}
+        <button class="btn btn-default btn-primary"><a href="{{ instance.get_update_url }}">Update</a></button>
+        <button class="btn btn-default btn-danger"><a href="{{ instance.get_delete_url }}">Delete</a></button>
+    {% endif %}
 </div>
 
  </div>
 </div>
-{% else %}
 
-You can only update your own posts
-
-{% endif %}
 {% endblock  %}

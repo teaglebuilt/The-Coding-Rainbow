@@ -39,6 +39,8 @@ body {
     transform: skewY(-3deg);
   }
 
+
+
 .box {
     position: relative;
     margin: 40px auto;
@@ -169,11 +171,12 @@ em {
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-    max-width: 200px;
+    max-width: 400px;
     height: 667px;
     background: #fff;
     border-radius: 10px;
 }
+
 
 .blog-users header {
     position: relative;
@@ -187,28 +190,171 @@ em {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
 
-.item {
-    height: 56px;
-    border-bottom: 1px solid #ececec;
-    text-align: left;
-    padding-left: 16px;
-}
-
-.item label a img {
-    float: left;
-    display: inline-block;
-    background-color: #ccc;
-    width: 40px;
+.srchFld {
+    border: 0;
+    border-radius:7px;
+    padding: 0 17px;
+    padding-right:55px;
+    display:inline-block;
+    float:left;
+    width:75%;
+    border-bottom:5px solid #bdc3c7;
     height: 40px;
-    border-radius: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #7f8c8d;
+    font-size:19px;
+
+  }
+
+  .srchFld:focus {
+    outline-color: rgba(white,0);
+  }
+
+  .srchBtn {
+    border: 0;
+    border-radius:7px;
+    padding: 0 17px;
+    background: #e74c3c;
+    display:inline-block;
+    float:right;
+    width:25%;
+    border-bottom:5px solid #c0392b;
+    color:white;
+    height: 40px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size:18px;
+    cursor: pointer;
+  }
+
+  .srchBtn:active {
+    border-bottom:0px solid #c0392b;
+  }
+
+  .wrapr {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  .imgWrpr {
+    float:left;
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    overflow:hidden;
+    border: 6px solid #eee;
+  }
+
+  .contact img {
+    height: 80px;
+    width: 80px;
+  }
+  span .user-avatar {
+      width: 70px;
+      border-radius: 50px;
+  }
+
+  .contactInfo {
+    display:inline-block;
+    float:left;
+    padding: 20px;
+    font-size:25px;
+    color:rgb(80,80,80);
+    font-family: 'Varela Round', cursive;
+    border-bottom: 4px dashed darkgray;
+  }
+
+  .name {
+    font-size:35px;
+  }
+
+
+
+.join-newsletter {
+  height: 200px;
+  background: #3f51b5;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.join-newsletter button {
+    float: right;
     margin-top: 10px;
-    transition: background .5s;
 }
 
-.item span {
-   font-family: 'Varela Round', sans-serif;
-   font-size: 24px;
-   padding: 10px;
+ul, li {
+    list-style: none;
+}
+h5{
+  margin: 0;
+
+}
+h3{
+  color: #2996bd;
+  margin: 10px 0px 15px;
+  padding-bottom:10px;
+  padding-left: 10px;
+  border-left: 5px solid #32aae1;
+}
+.sidebar.widget {
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+}
+.sidebar.widget ul {
+    margin: 0px;
+    padding: 0;
+    overflow: hidden;
+}
+.sidebar.widget ul li {
+    overflow: hidden;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 20px
+}
+.sidebar-thumb{
+    float: left;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.sidebar-thumb img{
+  background: #fff;
+  border: 1px dashed #e0e0e0;
+  padding: 6px;
+  height: 75px;
+  width: 75px;
+
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+.sidebar-content h5{
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 24px;
+}
+.sidebar-content h5 a:hover{
+  color: #2996bd;
 }
 
-
+.sidebar-content h5 a{
+    color: #202020;
+    outline: 0 none;
+    text-decoration: none;
+    font-weight: bold
+}
+.sidebar-meta{
+  margin-top: 10px;
+}
+.sidebar-meta span{
+  color: #2e2e2e;
+}
+.sidebar-meta span.time{
+  margin-right: 10px;
+}
+.sidebar-meta span i{
+  color: #2996bd
+}

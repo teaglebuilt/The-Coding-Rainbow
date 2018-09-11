@@ -18,14 +18,17 @@ html {
 }
 
 .gradient-btn {
+    float: right;
+    margin-right: 200px;
 	position: relative;
 	display: inline-block;
-	padding: 1.2em 2em;
+	padding: 1em 1em;
 	text-decoration: none;
 	text-align: center;
 	cursor: pointer;
 	user-select: none;
-	color: white;
+    color: white;
+    margin-bottom: 20px;
 }
 .gradient-btn::before {
         color: white;
@@ -35,7 +38,7 @@ html {
 		left: 0;
 		bottom: 0;
 		right: 0;
-		background: linear-gradient(135deg, #6e8efb, #a777e3);
+		background: linear-gradient(135deg, #1f3356, #758ef3);
 		border-radius: 4px;
 		transition: box-shadow .5s ease, transform .2s ease;
 		will-change: transform;
@@ -88,6 +91,7 @@ html {
 .nav-icon {
   color: white;
   padding-top: 25px;
+  padding-right: 30px;
 }
 
 .nav-user {
@@ -369,14 +373,13 @@ col-sm-4:nth-child(2) .price-table {
 .benefits {
     display: flex;
     justify-content: center;
-    background: #758ef3;
+    background: #1f3356;
     padding: 20px;
     margin: 20px;
     border-radius: 15px;
     color: whitesmoke;
     border: 1px slateblue;
     box-shadow: .8px .9px 3px grey;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
 }
 .benefits-ul-1 {
     padding: 10px;

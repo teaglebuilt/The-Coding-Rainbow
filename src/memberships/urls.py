@@ -28,7 +28,7 @@ urlpatterns = [
 	path('my_membership/', my_membership_view, name='my_membership'),
 	path('cancel/', cancelSubscription, name='cancel'),
 	path('memberlist/', users_list, name='memberlist'),
-	url(r'^(?P<slug>[\w-]+)/$', profile_view),
+	url(r'^(?P<slug>[\w-]+)/$', profile_view, name='profile-view'),
 	url(r'^friend-request/send/(?P<id>[\w-]+)/$', send_friend_request),
     url(r'^friend-request/cancel/(?P<id>[\w-]+)/$', cancel_friend_request),
     url(r'^friend-request/accept/(?P<id>[\w-]+)/$', accept_friend_request),

@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.db.models import Q
+
 from django.db import IntegrityError, transaction
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -34,7 +36,8 @@ def my_membership_view(request):
     sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
     rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
 
-
+    friends = p.friends.all()
+    print(friends, "I GOT FRIENDS")
 
     avatar_form = AvatarChangeForm()
     if request.method == "POST":
@@ -48,6 +51,7 @@ def my_membership_view(request):
             user_membership.save()
     context = {
 		'user_membership': user_membership,
+        'friends': friends,
         'sent_friend_requests': sent_friend_requests,
         'rec_friend_requests': rec_friend_requests,
         'user_subscription': user_subscription,
@@ -206,14 +210,14 @@ def users_list(request):
     context = { 'users': users }
     return render(request, 'memberships/users_list.html', context)
 
-
+@login_required
 def send_friend_request(request, id):
-	if request.user.is_authenticated:
 		user = get_object_or_404(User, id=id)
 		frequest, created = FriendRequest.objects.get_or_create(
 			from_user=request.user,
 			to_user=user)
-		return HttpResponseRedirect('/memberships/admin')
+		return HttpResponseRedirect(user.membership.get_absolute_url())
+
 
 def cancel_friend_request(request, id):
 	if request.user.is_authenticated:
@@ -222,35 +226,40 @@ def cancel_friend_request(request, id):
 			from_user=request.user,
 			to_user=user).first()
 		frequest.delete()
-		return HttpResponseRedirect('/memberships/admin')
+		return HttpResponseRedirect(user.membership.get_absolute_url())
 
 def accept_friend_request(request, id):
     from_user = get_object_or_404(User, id=id)
     frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     user1 = frequest.to_user
-    print("USER ONE HERE", user1)
     user2 = from_user
-    user1.friends.add(user2)
-    user2.friends.add(user1)
+    # import pdb; pdb.set_trace()  -- use this for debugging and learn it
+
+    user1.membership.friends.add(user2.membership)
+    user2.membership.friends.add(user1.membership)
     frequest.delete()
-    return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+    return HttpResponseRedirect(user1.membership.get_absolute_url())
 
 
 def delete_friend_request(request, id):
-	from_user = get_object_or_404(User, id=id)
-	frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
-	frequest.delete()
-	return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+    from_user = get_object_or_404(User, id=id)
+    frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
+    frequest.delete()
+    return HttpResponseRedirect(reverse('profile-view', kwargs={'slug': request.user.profile.slug}))
+	# return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
 
 
 def profile_view(request, slug):
     p = UserMembership.objects.filter(slug=slug).first()
+    # get_object_or_404
     u = p.user
+    print(p.user)
     user_membership = UserMembership.objects.filter(slug=slug).first()
     sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
     rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
 
     friends = p.friends.all()
+    # import pdb; pdb.set_trace()
 
     # is this user our friend?
     button_status = 'none'
@@ -258,8 +267,8 @@ def profile_view(request, slug):
         button_status = 'not_friend'
 
         # if we have sent him a friend request
-        if len(FriendRequest.objects.filter(
-            from_user=request.user).filter(to_user=p.user)) == 1:
+        if FriendRequest.objects.filter(
+            from_user=request.user).filter(to_user=p.user).exists():
                 button_status = 'friend_request_sent'
 
     context = {

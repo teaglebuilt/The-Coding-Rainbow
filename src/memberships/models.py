@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
+from videoservice.utils import unique_slug_generator
 from datetime import datetime
 import stripe
 
@@ -32,7 +33,7 @@ class Membership(models.Model):
 		db_table = 'Membership'
 
 class UserMembership(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='membership')
 	slug = models.SlugField()
 	stripe_customer_id = models.CharField(max_length=40)
 	membership = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True)
@@ -51,6 +52,11 @@ class UserMembership(models.Model):
 	def get_absolute_url(self):
 		return "/memberships/{}".format(self.slug)
 
+def slug_save(sender, instance, *args, **kwargs):
+	if not instance.slug:
+		instance.slug = unique_slug_generator(instance, instance.first_name)
+
+pre_save.connect(slug_save, sender=UserMembership)
 
 def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
 	if created:
