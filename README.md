@@ -4,10 +4,33 @@ The purpose of this application is to provide a basic social educational applica
 
 
 ## Story Line
+### AS A USER, I CAN...
++ create account
+  - Register, Login, Logout
 
-As a user, I can create an account and login to The Coding Spectrum. I have my own profile that I can build for myself. In my own profile view, I can update my personal information, avatar, and so on. I can see my own history of blog posts, a list of my friends, pending friend requests from other users, as well as sent friend requests on your behalf.
++ view video footage
+  - Courses of lessons available by membership
 
-Users can use the blog to ask questions by rendering their code in a post, where other users can comment. A user's post has the ability to accumulate likes from other users on the platform.
++ membership, upgrade membership
+  - Free, Professional, Enterprise
+
++ Pay to upgrade your Subscription
+
++ user profile
+ - update profile
+ - view user blog history
+ - view friends
+ - view pending friend requests
+ - view sent friend requests
+
++ view another users profile
+
++ view the blog "The Short Stack"
+ - create a post, renders html, markdown, images, blockquotes, etc...
+ - like a user's post
+ - update or delete your own posts
+ - comment on a user's post
+
 
 Users can also hold a discussion through comments on the video lesson. Please feel free to clone down the project and check it out!
 
