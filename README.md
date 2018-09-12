@@ -1,7 +1,6 @@
 # The Coding Spectrum
 
-The purpose of this application is to provide a basic social educational application for beginners at web/software development. Do you remember the reading rainbow when you were a kid? Well, that was before we had internet children. Twenty years later, guess what, every thing is automated! So screw the reading rainbow! Put down your books kids and lets go learn to code!
-
+The purpose of this application is to provide a basic social educational application for beginners at web/software development. This is a project for graduating Nashville Software School. Team Treehouse is the inspiration behind the model of this project.
 
 ## Story Line
 ### AS A USER, I CAN...
@@ -17,19 +16,19 @@ The purpose of this application is to provide a basic social educational applica
 + Pay to upgrade your Subscription
 
 + user profile
- - update profile
- - view user blog history
- - view friends
- - view pending friend requests
- - view sent friend requests
+  - update profile
+  - view user blog history
+  - view friends
+  - view pending friend requests
+  - view sent friend requests
 
 + view another users profile
 
 + view the blog "The Short Stack"
- - create a post, renders html, markdown, images, blockquotes, etc...
- - like a user's post
- - update or delete your own posts
- - comment on a user's post
+  - create a post, renders html, markdown, images, blockquotes, etc...
+  - like a user's post
+  - update or delete your own posts
+  - comment on a user's post
 
 
 Users can also hold a discussion through comments on the video lesson. Please feel free to clone down the project and check it out!
