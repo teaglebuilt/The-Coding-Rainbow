@@ -5,7 +5,7 @@ from django.utils.text import slugify
 from memberships.models import UserMembership
 import datetime
 
-# Create your models here.
+
 class Post(models.Model):
     slug = models.SlugField(unique=True)
     title = models.CharField(max_length= 50)
@@ -15,7 +15,6 @@ class Post(models.Model):
     author = models.ForeignKey(UserMembership, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='post_image', null=True, blank=True)
     likes = models.ManyToManyField(UserMembership, blank=True, related_name='post_likes')
-
 
     def __str__(self):
         return self.title

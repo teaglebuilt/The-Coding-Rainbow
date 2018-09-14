@@ -196,10 +196,11 @@
 
 				<div class="center">
 					<button type="button" class="btn btn-sm btn-primary btn-white btn-round">
+						<a href="/blog/">
 						<i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
 						<span class="bigger-110">View all posts</span>
-
 						<i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+						</a>
 					</button>
 				</div>
 			  </div>
@@ -219,44 +220,85 @@
 			  <div id="friends" class="tab-pane">
 				<div class="row">
 					<div class="friend-box col-md-4">
-							<h1>Friends</h1>
-							{% for friend in friends %}
-							{% if friend.avatar %}
-
-							<a href="{{ friend.usermembership.get_absolute_url }}">
+					  <h1>Friends</h1>
+					  <ul class="friend-ul">
+					  {% for friend in friends %}
+						{% if friend.avatar %}
+						  <li class="friend-li">
+							<a href="{{ friend.get_absolute_url }}">
 							  <img class="friend-img" src="{{ friend.avatar.url }}" alt="">
-								<h4 class="friend-text">{{ friend }}</h4>
+								<h4>{{ friend }}</h4>
 							</a>
+							<small><a class='btn btn-danger' href="/memberships/friends/delete/{{ friend.id }}">Delete</a></small>
+							</li>
 							  {% else %}
-
-							   <a href="{{ friend.usermembership.get_absolute_url }}">
+							<li class="friend-li">
+							   <a href="{{ friend.get_absolute_url }}">
 							  	<img class="friend-img" src="http://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-								<h4 class="friend-text">{{ friend }}</h4>
+								<h4>{{ friend }}</h4>
 								</a>
 
+							</li>
 							  {% endif %}
-							</a>
 							<hr>
 							{% endfor %}
+						</ul>
 					</div>
 					<div class="friend-box col-md-4">
 							<h1>Outgoing Requests</h1>
-							<ul>
+							<ul class="friend-ul">
 							{% for s_request in sent_friend_requests %}
-								<li>{{ s_request.to_user.username }}</li>
+								{% if s_request.to_user.membership.avatar %}
+								<li class="friend-li">
+								  <a href="{{ s_request.to_user.membership.get_absolute_url }}">
+								   <img class="friend-img" src="{{ s_request.to_user.membership.avatar.url }}" alt="">
+								   <h4>{{ s_request.to_user.username }}</h4>
+								  </a>
+								</li>
 								<hr>
+								{% else %}
+								<li class="friend-li">
+								   <a href="{{ s_request.to_user.membership.get_absolute_url }}">
+								      <img class="friend-img" src="http://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+								      <h4>{{ s_request.to_user.username }}</h4>
+								   </a>
+								 </li>
+								<hr>
+								{% endif %}
 							{% endfor %}
 							</ul>
 					</div>
 					<div class="friend-box col-md-4">
 							<h1>Incoming Requests</h1>
-
+							<ul class="friend-ul">
 							{% for r_request in rec_friend_requests %}
-								<p><a href="{{ r_request.from_user.profile.get_absolute_url }}">{{ r_request.from_user.username }}</a></p>
+								<!-- <p><a href="{{ r_request.from_user.profile.get_absolute_url }}">{{ r_request.from_user.username }}</a></p>
 								<small><a class='btn btn-primary' href="/memberships/friend-request/accept/{{ r_request.from_user.id }}">Accept</a></small>
 								<small><a class='btn btn-warning' href="/memberships/friend-request/delete/{{ r_request.from_user.id }}">Ignore</a></small>
+								<hr> -->
+								{% if r_request.from_user.membership.avatar %}
+								<li class="friend-li">
+								  <a href="{{ r_request.from_user.membership.get_absolute_url }}">
+								   <img class="friend-img" src="{{ r_request.from_user.membership.avatar.url }}" alt="">
+								   <h4>{{ r_request.from_user.username }}</h4>
+								  </a>
+								  <small><a class='btn btn-primary' href="/memberships/friend-request/accept/{{ r_request.from_user.id }}">Accept</a></small>
+								  <small><a class='btn btn-warning' href="/memberships/friend-request/delete/{{ r_request.from_user.id }}">Ignore</a></small>
+								</li>
 								<hr>
+								{% else %}
+								<li class="friend-li">
+								 <a href="{{ r_request.from_user.membership.get_absolute_url }}">
+								   <img class="friend-img" src="http://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+								   <h4>{{ r_request.from_user.username }}</h4>
+								 </a>
+								 <small><a class='btn btn-primary' href="/memberships/friend-request/accept/{{ r_request.from_user.id }}">Accept</a></small>
+								<small><a class='btn btn-warning' href="/memberships/friend-request/delete/{{ r_request.from_user.id }}">Ignore</a></small>
+								</li>
+								<hr>
+							{% endif %}
 							{% endfor %}
+							</ul>
 					</div>
 				</div>
 			  </div>

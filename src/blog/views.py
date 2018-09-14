@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, ListView
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
 
@@ -18,9 +18,17 @@ from memberships.views import get_user_membership
 from .forms import PostModelForm, NewsLetterSignUpForm
 
 
+def search_list_view(request):
+    search_query = request.GET.get('search')
+    search_results = UserMembership.objects.filter(user__username__icontains=search_query)
+    print(search_results)
+    return render(request, 'blog/posts_list.html', {'search_results': search_results})
+
+
+
 def posts_list(request):
+    queryset_list = Post.objects.all().order_by("-timestamp")
     users = UserMembership.objects.exclude(user=request.user)
-    queryset_list = Post.objects.all()
     query = request.GET.get('q')
     if query:
         queryset_list = queryset_list.filter(
@@ -49,8 +57,11 @@ def posts_list(request):
 
 
 def post_detail(request, slug):
+    user = UserMembership.objects.filter(user=request.user)[0]
     instance = get_object_or_404(Post, slug=slug)
+
     context = {
+        'user': user,
         'instance': instance
     }
     return render(request, 'blog/posts_detail.html', context)

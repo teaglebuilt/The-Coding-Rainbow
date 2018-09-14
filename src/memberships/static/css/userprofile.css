@@ -1488,6 +1488,7 @@ html {
     width: 30%;
     margin: 20px;
     min-height: 400px;
+    max-height: 600px;
     border: 1px solid #667E99;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
@@ -1505,7 +1506,12 @@ html {
     border-radius: 50px;
 }
 
-.friend-text {
-    font-size: 24px;
-    margin-left: 40px;
+.friend-ul {
+    list-style: none;
 }
+
+.friend-li {
+    display: flex;
+    flex-direction: row;
+}
+

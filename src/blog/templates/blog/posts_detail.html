@@ -4,25 +4,18 @@
 
 {% block content %}
 
-<div class="well well-lg detail-well">
-<div class="row">
-    <div class="col-sm-12">
-        <h1 class="text-center detail-title">{{ instance.title }}</h1>
-    </div>
+<div class="col-sm-12">
+    <h1 class="text-center detail-title">{{ instance.title }}</h1>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-       <small>Created:{{ instance.timestamp}}</small>
-       <small>Written By:{{ instance.author.first_name }}</small>
-       <small>Updated On:{{ instance.updated }}</small>
-    </div>
-    <div class="col-md-4">
-
-    </div>
+<div class="text-center">
+        Created:{{ instance.timestamp}}
+        Written By:{{ instance.author.first_name }}
+        Updated On:{{ instance.updated }}
 </div>
+
+<div class="well detail-well">
+
 {% if instance.image %}
 <div class="row">
   <div class="col-md-4"></div>
@@ -31,31 +24,18 @@
     </div>
   <div class="col-md-4"></div>
 </div>
+{% endif %}
    <div class="row">
      <div class="col-md-2"></div>
        <div class="col-md-8">
-            <p class="text-center content-markdown detail-descr">
+            <div class="text-center content-markdown detail-descr">
              <strong>
                  {{ instance.description|safe }}
              </strong>
-            </p>
+            </div>
        </div>
      <div class="col-md-2"></div>
    </div>
-{% else %}
-   <div class="row">
-        <div class="col-md-12">
-             <p class="text-center content-markdown">{{ instance.description }}</p>
-        </div>
-    </div>
-{% endif %}
-
-
-<div class="row">
-    <div class="col-md-10 col-sm-offset-2">
-        <div class="fb-comments" data-href="{{ request.build_absolute.uri }}" data-numposts="5"></div>
-    </div>
-</div>
 
 <div class="row detail-btns">
 
@@ -65,7 +45,7 @@
         Like
         <span>{{ instance.likes.count }}</span>
     </a>
-    {% if user.id == instance.author.id %}
+    {% if user == instance.author %}
         <button class="btn btn-default btn-primary"><a href="{{ instance.get_update_url }}">Update</a></button>
         <button class="btn btn-default btn-danger"><a href="{{ instance.get_delete_url }}">Delete</a></button>
     {% endif %}
@@ -73,5 +53,11 @@
 
  </div>
 </div>
+
+<div class="row">
+        <div class="col-md-10 col-sm-offset-2">
+            <div class="fb-comments" data-href="{{ request.build_absolute.uri }}" data-numposts="5"></div>
+        </div>
+    </div>
 
 {% endblock  %}

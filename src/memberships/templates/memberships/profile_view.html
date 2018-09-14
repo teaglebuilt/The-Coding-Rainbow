@@ -22,23 +22,29 @@
 						{% endif %}
 
 						<div class="space space-4"></div>
+						{% if current_user in friends %}
+						<h1>Already Friends</h1>
+						{% else %}
+							{% if button_status == 'not_friend' %}
+								<small>
+									<a class='btn btn-sm btn-block btn-success' href="/memberships/friend-request/send/{{ u.id }}">
+										<i class="ace-icon fa fa-plus-circle bigger-120"></i>
+										<span class="bigger-110">Add as a friend</span>
+									</a>
+								</small>
 
-
-                        {% if button_status == 'not_friend' %}
-			                <small>
-                                <a class='btn btn-sm btn-block btn-success' href="/memberships/friend-request/send/{{ u.id }}">
-                                    <i class="ace-icon fa fa-plus-circle bigger-120"></i>
-                                      <span class="bigger-110">Add as a friend</span>
-                                </a>
-                            </small>
-		                {% elif button_status == 'friend_request_sent' %}
-			                <small>
-                                <a class="btn btn-sm btn-block btn-warning" href="/memberships/friend-request/cancel/{{ u.id }}">
-                                    <i class="ace-icon fas fa-ban bigger-120"></i>
-                                    <span class="bigger-110">Cancel Request</span>
-                                </a>
-                            </small>
+							{% elif button_status == 'friend_request_sent' %}
+								<small>
+									<a class="btn btn-sm btn-block btn-warning" href="/memberships/friend-request/cancel/{{ u.id }}">
+										<i class="ace-icon fas fa-ban bigger-120"></i>
+										<span class="bigger-110">Cancel Request</span>
+									</a>
+								</small>
+							{% endif %}
 						{% endif %}
+
+
+
 
 						<a href="#" class="btn btn-sm btn-block btn-primary">
 							<i class="ace-icon fa fa-envelope-o bigger-110"></i>

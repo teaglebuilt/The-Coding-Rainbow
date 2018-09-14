@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto|Basic|Ubuntu");
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 /* CUSTOM */
 button a {
     color: white;
@@ -156,18 +157,44 @@ a:hover {
 
 .btn-toolbar {margin-top:10px;}
 
-ul li img {
+/* ul li img {
   float:left;
   margin-right:15px;
   height: 128px;
   width: 128px;
-}
+} */
 
 
 
 
 
 /* COURSE LIST END */
+
+/* COURSE DETAIL */
+
+.lesson {
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 9px 10px -2px rgba(0,0,0,0.2);
+}
+
+a .panel-img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.panel-tab {
+    padding: 10px;
+}
+a .panel-tab p {
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    color: #1f3356;
+    padding-left: 10px;
+}
+
+
 
 /* NO MEMBER */
    .non-member-card {
@@ -247,11 +274,22 @@ ul li img {
 }
 
 /* POST DETAIL */
+
 .detail-well {
     padding: 60px;
+    width: 60%;
+    border-radius:10px 0 0 10px;
+    -moz-border-radius:10px 0 0 10px;
+    -webkit-border-radius:10px 0 0 10px;
+    -o-border-radius:10px 0 0 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+    background: #fff;
+    vertical-align: -webkit-baseline-middle;
+    position: relative;
+    margin-left: 300px;
 }
 .detail-title {
-    font-family: 'Basic', sans-serif;
+    font-family: 'Roboto', sans-serif;
     padding: 10px;
 }
 .image-detail {
@@ -264,6 +302,10 @@ ul li img {
 }
 .detail-btns {
     float: right;
+}
+
+.fb-comments {
+    margin-left: 200px;
 }
 /* Profile Page */
 
@@ -397,3 +439,4 @@ col-sm-4:nth-child(2) .price-table {
 .check {
     font-family: 'M Plus rounded 1c', sans-serif;
 }
+

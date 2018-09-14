@@ -4,15 +4,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-                <h1 class="title">Create a Post</h1>
-                <h4 class="subtitle">Ask questions or share with others what you are learning!</h4>
-                <p class="subtitle">Be descriptive so others can understand and provide feedback</p>
-        </div>
-    </div>
-</div>
 
 <div class="container">
     <div class="row">
@@ -21,7 +12,6 @@
                 {% csrf_token %}
                 {{ form.as_p }}
 
-            </br>
                  <input type="submit" value="submit" class="btn btn-primary btn-block"/>
             </form>
       </div>

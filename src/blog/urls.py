@@ -9,7 +9,8 @@ from .views import (
     PostLikeToggle,
     PostLikeAPIToggle,
     newsletter_signup,
-    newsletter_unsubscribe
+    newsletter_unsubscribe,
+    search_list_view,
 )
 
 
@@ -27,4 +28,5 @@ urlpatterns = [
     url(r'^api/(?P<slug>[\w-]+)/like/$', PostLikeAPIToggle.as_view(), name='like_api'),
     url(r'sign_up/$', newsletter_signup, name='newsletter_signup'),
     url(r'unsubscribe/$', newsletter_unsubscribe, name='newsletter_unsubscribe'),
+    url(r'^searchlist$', search_list_view, name='search_list'),
 ]

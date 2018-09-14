@@ -8,12 +8,12 @@ from .views import (
 	my_membership_view,
 	cancelSubscription,
 	user_logout_view,
-	users_list,
 	profile_view,
 	accept_friend_request,
 	send_friend_request,
 	delete_friend_request,
 	cancel_friend_request,
+	delete_friend,
 	)
 
 app_name = 'memberships'
@@ -27,10 +27,10 @@ urlpatterns = [
     path('update-transactions/<subscription_id>/', updateTransactionRecords, name='update-transactions'),
 	path('my_membership/', my_membership_view, name='my_membership'),
 	path('cancel/', cancelSubscription, name='cancel'),
-	path('memberlist/', users_list, name='memberlist'),
 	url(r'^(?P<slug>[\w-]+)/$', profile_view, name='profile-view'),
 	url(r'^friend-request/send/(?P<id>[\w-]+)/$', send_friend_request),
     url(r'^friend-request/cancel/(?P<id>[\w-]+)/$', cancel_friend_request),
     url(r'^friend-request/accept/(?P<id>[\w-]+)/$', accept_friend_request),
     url(r'^friend-request/delete/(?P<id>[\w-]+)/$', delete_friend_request),
+	url(r'^friends/delete/(?P<id>[\w-]+)/$', delete_friend),
 ]

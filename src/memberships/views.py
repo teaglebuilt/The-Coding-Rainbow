@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.db.models import Q
-
 from django.db import IntegrityError, transaction
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -37,7 +36,7 @@ def my_membership_view(request):
     rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
 
     friends = p.friends.all()
-    print(friends, "I GOT FRIENDS")
+
 
     avatar_form = AvatarChangeForm()
     if request.method == "POST":
@@ -205,22 +204,18 @@ def cancelSubscription(request):
     return redirect('/memberships')
 
 
-def users_list(request):
-    users = UserMembership.objects.exclude(user=request.user)
-    context = { 'users': users }
-    return render(request, 'memberships/users_list.html', context)
-
 @login_required
 def send_friend_request(request, id):
-		user = get_object_or_404(User, id=id)
-		frequest, created = FriendRequest.objects.get_or_create(
-			from_user=request.user,
-			to_user=user)
-		return HttpResponseRedirect(user.membership.get_absolute_url())
+    # import pdb; pdb.set_trace()
+    user = get_object_or_404(User, id=id)
+    frequest, created = FriendRequest.objects.get_or_create(
+        from_user=request.user,
+		to_user=user)
+    return HttpResponseRedirect(user.membership.get_absolute_url())
 
-
+@login_required
 def cancel_friend_request(request, id):
-	if request.user.is_authenticated:
+	# if request.user.is_authenticated:
 		user = get_object_or_404(User, id=id)
 		frequest = FriendRequest.objects.filter(
 			from_user=request.user,
@@ -233,7 +228,6 @@ def accept_friend_request(request, id):
     frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     user1 = frequest.to_user
     user2 = from_user
-    # import pdb; pdb.set_trace()  -- use this for debugging and learn it
 
     user1.membership.friends.add(user2.membership)
     user2.membership.friends.add(user1.membership)
@@ -245,20 +239,30 @@ def delete_friend_request(request, id):
     from_user = get_object_or_404(User, id=id)
     frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     frequest.delete()
-    return HttpResponseRedirect(reverse('profile-view', kwargs={'slug': request.user.profile.slug}))
-	# return HttpResponseRedirect('/memberships/{}'.format(request.user.profile.slug))
+    return HttpResponseRedirect('/memberships/{}'.format(request.user.membership.slug))
+    # return HttpResponseRedirect(reverse('profile-view', kwargs={'slug': request.user.profile.slug}))
+
+def delete_friend(request, id):
+    user = UserMembership.objects.filter(user=request.user)[0]
+    user.friends.get(id=id).usermembership_set.clear()
+
+
+
+    return HttpResponseRedirect('/memberships/{}'.format(request.user.membership.slug))
+
 
 
 def profile_view(request, slug):
     p = UserMembership.objects.filter(slug=slug).first()
     # get_object_or_404
     u = p.user
-    print(p.user)
+    current_user = UserMembership.objects.filter(user=request.user)[0]
     user_membership = UserMembership.objects.filter(slug=slug).first()
     sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
     rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
 
     friends = p.friends.all()
+
     # import pdb; pdb.set_trace()
 
     # is this user our friend?
@@ -272,6 +276,7 @@ def profile_view(request, slug):
                 button_status = 'friend_request_sent'
 
     context = {
+        'current_user': current_user,
         'user_membership': user_membership,
         'u': u,
         'button_status': button_status,
@@ -281,6 +286,3 @@ def profile_view(request, slug):
     }
 
     return render(request, "memberships/profile_view.html", context)
-
-
-

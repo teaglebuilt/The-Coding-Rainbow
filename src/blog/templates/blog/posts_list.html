@@ -43,11 +43,28 @@
             <header>
               Users
             </header>
-            <form action="/blog/" class="cont">
-                <input type="text" class="srchFld" name="q" value="{{ request.GET.q }}" placeholder="" ng-model="search"/>
+
+            <form action="{% url 'blog:search_list' %}"class="cont">
+                <input type="search" class="srchFld" name="search" placeholder="" ng-model="search"/>
                 <button type="submit" class="srchBtn">Search</button>
                 <div class="entypo-search ico"></div>
-              </form>
+            </form>
+            {% for user in search_results %}
+
+            <a href="{{ user.get_absolute_url }}">
+                <span class="imgWrpr">
+                  {% if user.avatar %}
+                  <img class="user-avatar" src="{{ user.avatar.url }}">
+                  {% else %}
+                  <img class="user-avatar" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+                  {% endif %}
+                </span>
+                <span class="contactInfo">{{ user }}</span>
+              </div>
+            </a>
+
+        {% endfor %}
+
             {% for user in users %}
             <div class="wrapr row">
              <a href="{{ user.get_absolute_url }}">
@@ -61,11 +78,9 @@
               <span class="contactInfo">{{ user }}</span>
             </div>
           </a>
-
-            {% endfor %}
-
-          </div>
-        </aside>
+          {% endfor %}
+        </div>
+      </aside>
 
 
         <div class="col-md-6">
@@ -96,7 +111,7 @@
             <h2 class="text-center blog-title">{{ post.title }}</h2>
 
             <div class="entry-content">
-              <p class="content-markdown content-descr">{{ post.description|safe }}&hellip;</p>
+              <p class="content-markdown content-descr">{{ post.description|safe|truncatechars:100 }}&hellip;</p>
             </div>
             <footer class="post-footer">
               <div class="row">
@@ -138,7 +153,7 @@
               <h2 class="text-center blog-title">{{ post.title }}</h2>
 
               <div class="entry-content">
-                <p class="content-markdown content-descr">{{ post.description|safe }}&hellip;</p>
+                <p class="content-markdown content-descr">{{ post.description|safe|truncatechars:100 }}&hellip;</p>
               </div>
               <footer class="post-footer">
                 <a href="{{ post.get_like_url }}" data-likes="{{ post.likes.count }}" class="like-btn btn btn-success"
@@ -157,21 +172,24 @@
 
           {% endfor %}
 
-          <div class="pagination">
+          <ul class="pagination modal-1">
             <span class="step-links">
               {% if all_posts.has_previous %}
-              <a href="?{{ page_request_var }}={{ all_posts.previous_page_number }}">previous</a>
+              <li>
+                <a class="prev" href="?{{ page_request_var }}={{ all_posts.previous_page_number }}">previous</a>
+              </li>
               {% endif %}
-
-              <span class="current">
+              <!-- <span class="current active">
                 Page {{ all_posts.number }} of {{ all_posts.paginator.num_pages }}.
-              </span>
-
+              </span> -->
               {% if all_posts.has_next %}
-              <a href="?{{ page_request_var }}={{ all_posts.next_page_number }}">next</a>
+              <li>
+
+              </li>
+              <a class="next" href="?{{ page_request_var }}={{ all_posts.next_page_number }}">Next &raquo;</a>
               {% endif %}
             </span>
-          </div>
+          </ul>
 
         </div>
         <aside class="col-sm-2 col-md-2 col-lg-2">
